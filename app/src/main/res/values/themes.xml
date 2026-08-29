@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SyllabusMarkSheetAndAttendanceRegister" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+<!--        <item name="android:windowLightStatusBar">false</item>-->
+    </style>
+
+    <style name="Theme.SyllabusMarkSheetAndAttendanceRegister" parent="Base.Theme.SyllabusMarkSheetAndAttendanceRegister" />
+</resources>

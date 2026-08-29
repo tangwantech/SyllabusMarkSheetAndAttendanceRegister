@@ -1,0 +1,110 @@
+package com.example.syllabusmarksheetandattendanceregister
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.example.syllabusmarksheetandattendanceregister.databinding.FragmentSyllabusNavBinding
+import com.example.syllabusmarksheetandattendanceregister.viewmodels.SyllabusViewModel
+
+class SyllabusNavFragment : Fragment() {
+
+    private var _binding: FragmentSyllabusNavBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: SyllabusViewModel by activityViewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSyllabusNavBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupObservers()
+        setupListeners()
+    }
+
+    private fun setupObservers() {
+        viewModel.years.observe(viewLifecycleOwner) { years ->
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, years)
+            binding.spinnerYear.setAdapter(adapter)
+        }
+
+        viewModel.subjects.observe(viewLifecycleOwner) { subjects ->
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, subjects)
+            binding.spinnerSubject.setAdapter(adapter)
+        }
+
+        viewModel.mainClasses.observe(viewLifecycleOwner) { mainClasses ->
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, mainClasses)
+            binding.spinnerMainClass.setAdapter(adapter)
+            binding.layoutMainClass.isEnabled = mainClasses.isNotEmpty()
+        }
+
+        viewModel.selectedYear.observe(viewLifecycleOwner) { validateForm() }
+        viewModel.selectedSubject.observe(viewLifecycleOwner) { validateForm() }
+        viewModel.selectedMainClass.observe(viewLifecycleOwner) { validateForm() }
+
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressNav.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.btnSubmit.isEnabled = !isLoading && viewModel.isFormValid()
+        }
+
+        viewModel.navigateToChaptersEvent.observe(viewLifecycleOwner) { shouldNavigate ->
+            if (shouldNavigate) {
+                viewModel.onNavigatedToChapters()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, SyllabusChaptersFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
+    }
+
+    private fun setupListeners() {
+        binding.spinnerYear.setOnItemClickListener { parent, _, position, _ ->
+            viewModel.selectYear(parent.getItemAtPosition(position) as String)
+            viewModel.clearSyllabusFromDatabase(requireContext().applicationContext)
+        }
+
+        binding.spinnerSubject.setOnItemClickListener { parent, _, position, _ ->
+            val subject = parent.getItemAtPosition(position) as String
+            viewModel.selectSubject(subject)
+            binding.spinnerMainClass.text = null // Clear UI
+            viewModel.clearSyllabusFromDatabase(requireContext().applicationContext)
+        }
+
+        binding.spinnerMainClass.setOnItemClickListener { parent, _, position, _ ->
+            viewModel.selectMainClass(parent.getItemAtPosition(position) as String)
+            viewModel.clearSyllabusFromDatabase(requireContext().applicationContext)
+        }
+
+        binding.btnSubmit.setOnClickListener {
+            viewModel.fetchSyllabusChapters()
+        }
+    }
+
+    private fun validateForm() {
+        binding.btnSubmit.isEnabled = viewModel.isFormValid()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FA">
+
+    <!-- Header Background -->
+    <View
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Welcome Text -->
+    <TextView
+        android:id="@+id/welcomeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/welcome_label"
+        android:textColor="#CCFFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- User Full Name -->
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="User Full Name"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/welcomeLabel" />
+
+    <!-- Dashboard Content Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="160dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="@string/dashboard_title"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Syllabus Coverage Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSyllabus"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="16dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/syllabus_coverage"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_agenda"
+                app:iconPadding="12dp" />
+
+            <!-- Marksheet Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMarkSheet"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="16dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/marksheet"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_edit"
+                app:iconPadding="12dp" />
+
+            <!-- Attendance Register Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAttendance"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="16dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/attendance_register"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_myplaces"
+                app:iconPadding="12dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- Sign Out Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_out"
+                android:textColor="@color/error"
+                android:textSize="14sp"
+                app:icon="@android:drawable/ic_lock_power_off"
+                app:iconSize="18dp"
+                app:iconTint="@color/error" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Progress Overlay -->
+    <FrameLayout
+        android:id="@+id/progressOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:elevation="10dp"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/white" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,119 @@
+<resources>
+    <string name="app_name">Syllabus MarkSheet And Attendance Register</string>
+    <string name="login_title">Login</string>
+    <string name="title_test_score">Marksheet</string>
+    <string name="title_statistics">Statistics</string>
+    <string name="title_logout">Logout</string>
+    <string name="progress_please_wait">Please wait...</string>
+    <string name="progress_signing_in">Signing in...</string>
+
+    <string name="welcome_label">Welcome,</string>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="syllabus_coverage">Syllabus Coverage</string>
+    <string name="marksheet">Marksheet</string>
+    <string name="attendance_register">Attendance Register</string>
+    <string name="sign_out">Sign Out</string>
+
+    <string name="select_options">Select Options</string>
+    <string name="academic_year_hint">Academic Year</string>
+    <string name="subject_hint">Subject</string>
+    <string name="main_class_hint">Main Class</string>
+    <string name="submit">Submit</string>
+    <string name="syllabus_coverage_title">Syllabus Coverage</string>
+
+    <string name="lesson_stats_format">Lessons: %1$d / %2$d completed</string>
+    <string name="chapter_title_format">Chapter: %1$s</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="update_successful">Update Successful</string>
+    <string name="overall_syllabus_progress">Overall Syllabus Progress</string>
+    <string name="overall_lesson_stats_format">Lessons: %1$d / %2$d completed</string>
+    <string name="percentage_format">%1$d%%</string>
+
+    <string name="marksheet_header_subject_format">Subject: %1$s</string>
+    <string name="marksheet_header_subclass_format">Class: %1$s</string>
+    <string name="student_reg_id_format">REG ID: %1$s</string>
+    <string name="student_gender_format">GENDER: %1$s</string>
+    <string name="student_score_format">Score: %1$s / 20</string>
+    <string name="save_marksheet">Save Marksheet</string>
+    <string name="enrolled_count_format">Enrolled: %1$d</string>
+    <string name="passed_count_format">Passed: %1$d</string>
+    <string name="passed_percentage_format">%1$.1f%%</string>
+    <string name="males_label">Males(M): %1$d</string>
+    <string name="females_label">Females(F): %1$d</string>
+    <string name="males_stats_format">Males(M): %1$d / %2$d (%3$.1f%%)</string>
+    <string name="females_stats_format">Females(F): %1$d / %2$d (%3$.1f%%)</string>
+    <string name="update_score">Update Score</string>
+    <string name="score_hint">Score (0-20)</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_invalid_score">Score must be between 0 and 20</string>
+
+<!--    <string name="select_main_class">Select Main Class</string>-->
+<!--    <string name="select_subclass">Select Subclass</string>-->
+<!--    <string name="select_subject">Select Subject</string>-->
+<!--    <string name="select_sequence">Select Sequence</string>-->
+<!--    <string name="ok">OK</string>-->
+<!--    <string name="cancel">Cancel</string>-->
+<!--    <string name="dialog_title">Selection</string>-->
+<!--    <string name="marksheet_selection_title">Marksheet Selection</string>-->
+<!--    <string name="statistics_selection_title">Statistics Selection</string>-->
+
+<!--    <string name="header_class_label">Class</string>-->
+<!--    <string name="header_subject_label">Subject</string>-->
+<!--    <string name="header_sequence_label">Sequence</string>-->
+<!--    <string name="header_teacher_label">Teacher</string>-->
+<!--    <string name="header_enrollment_label">Enrollment</string>-->
+<!--    <string name="no_data_selected">No Marksheet to display</string>-->
+<!--    <string name="change_selection">Change</string>-->
+<!--    <string name="save_scores">Save</string>-->
+<!--    <string name="teacher_name_format">%1$s</string>-->
+<!--    <string name="error_invalid_score">Score must be between 0 and 20</string>-->
+
+<!--    <string name="teachers_format">Teacher: %1$s</string>-->
+<!--    <string name="no_statistics_to_display">No statistics to display</string>-->
+
+<!--    <string name="label_reg_id">REG ID:</string>-->
+<!--    <string name="label_gender">GENDER:</string>-->
+<!--    <string name="label_registered">REGISTERED</string>-->
+<!--    <string name="label_sat">Sat</string>-->
+<!--    <string name="label_passed">Passed</string>-->
+<!--    <string name="label_males">Males</string>-->
+<!--    <string name="label_females">Females</string>-->
+<!--    <string name="label_total">Total</string>-->
+
+<!--    <string name="marksheet_details">Marksheet Details</string>-->
+<!--    <string name="performance_report">Performance Report</string>-->
+
+<!--    <string-array name="subjects">-->
+<!--        <item>Biology</item>-->
+<!--        <item>Chemistry</item>-->
+<!--    </string-array>-->
+
+<!--    <string-array name="main_classes">-->
+<!--        <item>Form 1</item>-->
+<!--        <item>Form 2</item>-->
+<!--        <item>Form 3</item>-->
+<!--        <item>Form 4</item>-->
+<!--        <item>Form 5</item>-->
+<!--        <item>Lower Sixth</item>-->
+<!--        <item>Upper Sixth</item>-->
+<!--    </string-array>-->
+
+<!--    <string-array name="subclasses">-->
+<!--        <item>A</item>-->
+<!--        <item>B</item>-->
+<!--        <item>C</item>-->
+<!--        <item>Bil</item>-->
+<!--        <item>Arts</item>-->
+<!--        <item>Science</item>-->
+<!--    </string-array>-->
+
+<!--    <string-array name="sequences">-->
+<!--        <item>Sequence 1</item>-->
+<!--        <item>Sequence 2</item>-->
+<!--        <item>Sequence 3</item>-->
+<!--        <item>Sequence 4</item>-->
+<!--        <item>Sequence 5</item>-->
+<!--        <item>Sequence 6</item>-->
+<!--    </string-array>string-array-->
+</resources>
