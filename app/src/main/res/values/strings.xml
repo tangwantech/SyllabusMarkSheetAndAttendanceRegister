@@ -35,13 +35,9 @@
     <string name="student_gender_format">GENDER: %1$s</string>
     <string name="student_score_format">Score: %1$s / 20</string>
     <string name="save_marksheet">Save Marksheet</string>
-    <string name="enrolled_count_format">Enrolled: %1$d</string>
-    <string name="passed_count_format">Passed: %1$d</string>
-    <string name="passed_percentage_format">%1$.1f%%</string>
-    <string name="males_label">Males(M): %1$d</string>
-    <string name="females_label">Females(F): %1$d</string>
-    <string name="males_stats_format">Males(M): %1$d / %2$d (%3$.1f%%)</string>
-    <string name="females_stats_format">Females(F): %1$d / %2$d (%3$.1f%%)</string>
+    <string name="marksheet_stats_combined_format">Enrolled: %1$d  |  Passed: %2$d  |  %3$.1f%%</string>
+    <string name="males_stats_combined_format">Males(M): %1$d  |  Passed: %2$d  |  %3$.1f%%</string>
+    <string name="females_stats_combined_format">Females(F): %1$d  |  Passed: %2$d  |  %3$.1f%%</string>
     <string name="update_score">Update Score</string>
     <string name="score_hint">Score (0-20)</string>
     <string name="ok">OK</string>

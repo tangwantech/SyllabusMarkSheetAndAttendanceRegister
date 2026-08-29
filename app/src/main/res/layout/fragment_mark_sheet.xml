@@ -36,12 +36,11 @@
 
             <View
                 android:id="@+id/headerDivider"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="3dp"
                 android:layout_marginTop="8dp"
-                android:background="@color/colorPrimaryLight"
+                android:background="@color/colorAccent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textHeaderSubject" />
 
             <TextView
@@ -62,147 +61,55 @@
                 android:layout_height="wrap_content"
                 android:textColor="#E0E0E0"
                 android:textSize="16sp"
-
-                app:layout_constraintTop_toBottomOf="@+id/textHeaderSubclass"
-                app:layout_constraintBottom_toTopOf="@+id/textHeaderEnrolled"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textHeaderSubclass"
                 tools:text="Sequence 1" />
 
+            <!-- Overall Stats Badge -->
             <TextView
-                android:id="@+id/textHeaderEnrolled"
-                android:layout_width="wrap_content"
+                android:id="@+id/textHeaderOverallStats"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/bg_enrolled_badge"
                 android:paddingHorizontal="12dp"
-                android:paddingVertical="4dp"
+                android:paddingVertical="8dp"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textHeaderSequence"
-                tools:text="Enrolled: 25" />
+                tools:text="Enrolled: 25  |  Passed: 15  |  60.0%" />
 
+            <!-- Male Stats Badge -->
             <TextView
-                android:id="@+id/textHeaderPassed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/bg_enrolled_badge"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="4dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@id/textHeaderEnrolled"
-                app:layout_constraintStart_toEndOf="@id/textHeaderEnrolled"
-                tools:text="Passed: 15" />
-
-            <TextView
-                android:id="@+id/textHeaderPassPercentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/bg_enrolled_badge"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="4dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@id/textHeaderPassed"
-                app:layout_constraintStart_toEndOf="@id/textHeaderPassed"
-                tools:text="(60.0%)" />
-
-            <TextView
-                android:id="@+id/textHeaderMales"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_enrolled_badge"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="4dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textHeaderEnrolled"
-                tools:text="Males(M): 15" />
-
-            <TextView
-                android:id="@+id/textHeaderMalesPassed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/bg_enrolled_badge"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="4dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@id/textHeaderMales"
-                app:layout_constraintStart_toEndOf="@id/textHeaderMales"
-                tools:text="Passed: 10" />
-
-            <TextView
-                android:id="@+id/textHeaderMalesPassPercentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/bg_enrolled_badge"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="4dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@id/textHeaderMalesPassed"
-                app:layout_constraintStart_toEndOf="@id/textHeaderMalesPassed"
-                tools:text="(66.7%)" />
-
-            <TextView
-                android:id="@+id/textHeaderFemales"
-                android:layout_width="wrap_content"
+                android:id="@+id/textHeaderMalesCombined"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_enrolled_badge"
                 android:paddingHorizontal="12dp"
-                android:paddingVertical="4dp"
+                android:paddingVertical="8dp"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textHeaderMales"
-                tools:text="Females(F): 10" />
+                app:layout_constraintTop_toBottomOf="@id/textHeaderOverallStats"
+                tools:text="Males(M): 15  |  Passed: 10  |  66.7%" />
 
+            <!-- Female Stats Badge -->
             <TextView
-                android:id="@+id/textHeaderFemalesPassed"
-                android:layout_width="wrap_content"
+                android:id="@+id/textHeaderFemalesCombined"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/bg_enrolled_badge"
                 android:paddingHorizontal="12dp"
-                android:paddingVertical="4dp"
+                android:paddingVertical="8dp"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@id/textHeaderFemales"
-                app:layout_constraintStart_toEndOf="@id/textHeaderFemales"
-                tools:text="Passed: 5" />
-
-            <TextView
-                android:id="@+id/textHeaderFemalesPassPercentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/bg_enrolled_badge"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="4dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBaseline_toBaselineOf="@id/textHeaderFemalesPassed"
-                app:layout_constraintStart_toEndOf="@id/textHeaderFemalesPassed"
-                tools:text="(50.0%)" />
+                app:layout_constraintTop_toBottomOf="@id/textHeaderMalesCombined"
+                tools:text="Females(F): 10  |  Passed: 5  |  50.0%" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

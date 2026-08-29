@@ -54,48 +54,21 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
                 binding.textHeaderSequence.text = viewModel.selectedSequence.value
                 
                 val enrolledCount = data.students.count { it.isRegistered }
-                binding.textHeaderEnrolled.text = getString(R.string.enrolled_count_format, enrolledCount)
-
                 val passedCount = data.students.count { it.isRegistered && it.score in 10.0..20.0 }
-                binding.textHeaderPassed.text = getString(R.string.passed_count_format, passedCount)
-
-                if (enrolledCount > 0) {
-                    val percentage = (passedCount.toDouble() / enrolledCount.toDouble()) * 100.0
-                    binding.textHeaderPassPercentage.text = getString(R.string.passed_percentage_format, percentage)
-                    binding.textHeaderPassPercentage.visibility = View.VISIBLE
-                } else {
-                    binding.textHeaderPassPercentage.visibility = View.GONE
-                }
+                val percentage = if (enrolledCount > 0) (passedCount.toDouble() / enrolledCount) * 100.0 else 0.0
+                binding.textHeaderOverallStats.text = getString(R.string.marksheet_stats_combined_format, enrolledCount, passedCount, percentage)
 
                 // Male Stats
                 val enrolledMales = data.students.count { it.isRegistered && (it.gender.equals("M", ignoreCase = true) || it.gender.equals("Male", ignoreCase = true)) }
                 val passedMales = data.students.count { it.isRegistered && (it.gender.equals("M", ignoreCase = true) || it.gender.equals("Male", ignoreCase = true)) && it.score in 10.0..20.0 }
-                
-                binding.textHeaderMales.text = getString(R.string.males_label, enrolledMales)
-                binding.textHeaderMalesPassed.text = getString(R.string.passed_count_format, passedMales)
-                
-                if (enrolledMales > 0) {
-                    val malePercentage = (passedMales.toDouble() / enrolledMales) * 100.0
-                    binding.textHeaderMalesPassPercentage.text = getString(R.string.passed_percentage_format, malePercentage)
-                    binding.textHeaderMalesPassPercentage.visibility = View.VISIBLE
-                } else {
-                    binding.textHeaderMalesPassPercentage.visibility = View.GONE
-                }
+                val malePercentage = if (enrolledMales > 0) (passedMales.toDouble() / enrolledMales) * 100.0 else 0.0
+                binding.textHeaderMalesCombined.text = getString(R.string.males_stats_combined_format, enrolledMales, passedMales, malePercentage)
 
                 // Female Stats
                 val enrolledFemales = data.students.count { it.isRegistered && (it.gender.equals("F", ignoreCase = true) || it.gender.equals("Female", ignoreCase = true)) }
                 val passedFemales = data.students.count { it.isRegistered && (it.gender.equals("F", ignoreCase = true) || it.gender.equals("Female", ignoreCase = true)) && it.score in 10.0..20.0 }
-                
-                binding.textHeaderFemales.text = getString(R.string.females_label, enrolledFemales)
-                binding.textHeaderFemalesPassed.text = getString(R.string.passed_count_format, passedFemales)
-
-                if (enrolledFemales > 0) {
-                    val femalePercentage = (passedFemales.toDouble() / enrolledFemales) * 100.0
-                    binding.textHeaderFemalesPassPercentage.text = getString(R.string.passed_percentage_format, femalePercentage)
-                    binding.textHeaderFemalesPassPercentage.visibility = View.VISIBLE
-                } else {
-                    binding.textHeaderFemalesPassPercentage.visibility = View.GONE
-                }
+                val femalePercentage = if (enrolledFemales > 0) (passedFemales.toDouble() / enrolledFemales) * 100.0 else 0.0
+                binding.textHeaderFemalesCombined.text = getString(R.string.females_stats_combined_format, enrolledFemales, passedFemales, femalePercentage)
 
                 adapter.updateData(data.students)
             }
@@ -137,6 +110,8 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
             val currentStudent = viewModel.markSheetData.value?.students?.getOrNull(index) ?: return
             dialogBinding.textStudentNameTitle.text = currentStudent.name
             dialogBinding.editScore.setText(currentStudent.score.toString())
+            dialogBinding.editScore.requestFocus()
+            dialogBinding.editScore.selectAll()
             
             val students = viewModel.markSheetData.value?.students ?: emptyList()
             dialogBinding.btnPrevious.isEnabled = (0 until index).any { students[it].isRegistered }
@@ -147,10 +122,11 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
             val scoreStr = dialogBinding.editScore.text.toString()
             val score = scoreStr.toDoubleOrNull()
             return if (score != null && score in 0.0..20.0) {
+                dialogBinding.textInputLayoutScore.error = null
                 viewModel.updateStudentScore(currentIndex, score)
                 true
             } else {
-                Toast.makeText(requireContext(), R.string.error_invalid_score, Toast.LENGTH_SHORT).show()
+                dialogBinding.textInputLayoutScore.error = getString(R.string.error_invalid_score)
                 false
             }
         }
@@ -188,6 +164,21 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
                 dialog.dismiss()
             }
         }
+
+        dialogBinding.editScore.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {
+                val score = s.toString().toDoubleOrNull()
+                if (score != null && score in 0.0..20.0) {
+                    dialogBinding.textInputLayoutScore.error = null
+                } else if (s.isNullOrEmpty()) {
+                    dialogBinding.textInputLayoutScore.error = null
+                } else {
+                    dialogBinding.textInputLayoutScore.error = getString(R.string.error_invalid_score)
+                }
+            }
+        })
 
         updateDialogUI(currentIndex)
         dialog.show()
