@@ -4,7 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.syllabusmarksheetandattendanceregister.databinding.ActivitySyllabusCoverageBinding
+import com.example.syllabusmarksheetandattendanceregister.repositories.UserRepository
+import kotlinx.coroutines.launch
 
 class SyllabusCoverageActivity : AppCompatActivity() {
 
@@ -23,10 +26,14 @@ class SyllabusCoverageActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, SyllabusNavFragment())
-                .commit()
+        lifecycleScope.launch {
+            UserRepository.loadFromDatabase(this@SyllabusCoverageActivity)
+            
+            if (savedInstanceState == null) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, SyllabusNavFragment())
+                    .commit()
+            }
         }
     }
 

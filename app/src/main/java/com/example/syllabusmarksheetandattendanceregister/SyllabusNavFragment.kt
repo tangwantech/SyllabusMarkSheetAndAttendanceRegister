@@ -29,25 +29,31 @@ class SyllabusNavFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.loadInitialData()
         setupObservers()
         setupListeners()
     }
 
     private fun setupObservers() {
         viewModel.years.observe(viewLifecycleOwner) { years ->
+            if (years.isNullOrEmpty()) return@observe
             val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, years)
             binding.spinnerYear.setAdapter(adapter)
+            binding.spinnerYear.setText(viewModel.selectedYear.value, false)
         }
 
         viewModel.subjects.observe(viewLifecycleOwner) { subjects ->
+            if (subjects.isNullOrEmpty()) return@observe
             val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, subjects)
             binding.spinnerSubject.setAdapter(adapter)
+            binding.spinnerSubject.setText(viewModel.selectedSubject.value, false)
         }
 
         viewModel.mainClasses.observe(viewLifecycleOwner) { mainClasses ->
             val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, mainClasses)
             binding.spinnerMainClass.setAdapter(adapter)
             binding.layoutMainClass.isEnabled = mainClasses.isNotEmpty()
+            binding.spinnerMainClass.setText(viewModel.selectedMainClass.value, false)
         }
 
         viewModel.selectedYear.observe(viewLifecycleOwner) { validateForm() }
@@ -61,7 +67,8 @@ class SyllabusNavFragment : Fragment() {
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressNav.visibility = if (isLoading) View.VISIBLE else View.GONE
+//            binding.progressNav.visibility = if (isLoading) View.VISIBLE else View.GONE
+            toggleProgress(isLoading)
             binding.btnSubmit.isEnabled = !isLoading && viewModel.isFormValid()
         }
 
@@ -106,5 +113,9 @@ class SyllabusNavFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun toggleProgress(show: Boolean) {
+        binding.progressOverlay.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

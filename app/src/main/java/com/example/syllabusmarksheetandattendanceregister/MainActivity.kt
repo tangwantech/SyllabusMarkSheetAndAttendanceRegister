@@ -18,18 +18,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (savedInstanceState == null) {
-            checkSession()
-        }
+        // Always reload session data on start, even if restoring from state
+        checkSession(savedInstanceState == null)
     }
 
-    private fun checkSession() {
+    private fun checkSession(shouldNavigate: Boolean) {
         lifecycleScope.launch {
             val userData = UserRepository.loadFromDatabase(this@MainActivity)
-            if (userData?.sessionToken != null) {
-                showDashboard()
-            } else {
-                showLogin()
+            if (shouldNavigate) {
+                if (userData?.sessionToken != null) {
+                    showDashboard()
+                } else {
+                    showLogin()
+                }
             }
         }
     }

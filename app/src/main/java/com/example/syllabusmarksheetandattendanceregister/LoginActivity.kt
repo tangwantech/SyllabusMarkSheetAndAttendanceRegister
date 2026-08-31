@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.syllabusmarksheetandattendanceregister.databinding.LoginBinding
+import com.example.syllabusmarksheetandattendanceregister.datamodels.UserData
 import com.example.syllabusmarksheetandattendanceregister.repositories.LoginRepository
 import com.example.syllabusmarksheetandattendanceregister.repositories.UserRepository
 import com.example.syllabusmarksheetandattendanceregister.utils.NetworkUtils
@@ -55,7 +56,7 @@ class LoginActivity: AppCompatActivity() {
 
     private fun loginUser(username: String, password: String, deviceId: String){
         viewmodel.loginUser(this, username, password, deviceId, object : LoginRepository.LoginListener{
-            override fun onLoginSuccessful() {
+            override fun onLoginSuccessful(userData: UserData) {
                 runOnUiThread {
                     toggleLoading(false)
                     gotoMainActivity()

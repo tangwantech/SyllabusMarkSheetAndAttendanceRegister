@@ -75,22 +75,25 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressMarkSheet.visibility = if (isLoading) View.VISIBLE else View.GONE
+            toggleProgress(isLoading)
             binding.btnSaveMarkSheet.isEnabled = !isLoading
         }
     }
 
     private fun setupListeners() {
         binding.btnSaveMarkSheet.setOnClickListener {
+
             viewModel.saveMarkSheet(object : MarkSheetRepository.UpdateMarkSheetListener {
                 override fun onUpdateSuccessful(result: String) {
                     activity?.runOnUiThread {
+                        updateIsDataSaved(true)
                         Toast.makeText(requireContext(), getString(R.string.update_successful), Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onError(error: String) {
                     activity?.runOnUiThread {
+                        updateIsDataSaved(false)
                         Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -124,9 +127,11 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
             return if (score != null && score in 0.0..20.0) {
                 dialogBinding.textInputLayoutScore.error = null
                 viewModel.updateStudentScore(currentIndex, score)
+
                 true
             } else {
                 dialogBinding.textInputLayoutScore.error = getString(R.string.error_invalid_score)
+
                 false
             }
         }
@@ -181,6 +186,7 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
         })
 
         updateDialogUI(currentIndex)
+        dialog.window?.setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         dialog.show()
     }
 
@@ -199,4 +205,14 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
     override fun onSwitchStateChange(studentIndex: Int, state: Boolean) {
         viewModel.updateStudentRegistration(studentIndex, state)
     }
+
+    private fun toggleProgress(show: Boolean) {
+        binding.progressOverlay.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    fun updateIsDataSaved(state:Boolean){
+        viewModel.updateIsDataSave(state)
+    }
+
+
 }

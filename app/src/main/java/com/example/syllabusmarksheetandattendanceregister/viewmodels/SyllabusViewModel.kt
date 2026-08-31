@@ -9,9 +9,10 @@ import com.example.syllabusmarksheetandattendanceregister.datamodels.ChaptersDat
 import com.example.syllabusmarksheetandattendanceregister.datamodels.Lesson
 import com.example.syllabusmarksheetandattendanceregister.repositories.SyllabusChaptersRepository
 import com.example.syllabusmarksheetandattendanceregister.repositories.UserRepository
-import kotlinx.coroutines.launch
 import com.example.syllabusmarksheetandattendanceregister.database.AppDatabase
 import com.example.syllabusmarksheetandattendanceregister.database.SyllabusEntity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class SyllabusViewModel : ViewModel() {
 
@@ -59,7 +60,7 @@ class SyllabusViewModel : ViewModel() {
     data class SyllabusProgress(
         val totalLessons: Int,
         val completedLessons: Int,
-        val percentage: Int
+        val percentage: Double
     )
 
     private val _overallProgress = MutableLiveData<SyllabusProgress>()
@@ -72,12 +73,26 @@ class SyllabusViewModel : ViewModel() {
     val selectChapterLessonsCount: LiveData<Int> = _selectChapterLessonsCount
 
     init {
-        loadInitialData()
+        observeUserData()
     }
 
-    private fun loadInitialData() {
-        _years.value = UserRepository.getAcademicYears() ?: emptyList()
-        _subjects.value = UserRepository.getSubjectsTaught() ?: emptyList()
+    private fun observeUserData() {
+        viewModelScope.launch {
+            UserRepository.userDataFlow.collectLatest { userData ->
+                if (userData != null) {
+                    loadInitialData()
+                }
+            }
+        }
+    }
+
+    fun loadInitialData() {
+        UserRepository.getAcademicYears()?.let { _years.value = it }
+        UserRepository.getSubjectsTaught()?.let { _subjects.value = it }
+
+        _selectedSubject.value?.let { subject ->
+            UserRepository.getSubjectMainClasses(subject)?.let { _mainClasses.value = it.sorted() }
+        }
     }
 
     fun selectYear(year: String) {
@@ -163,7 +178,7 @@ class SyllabusViewModel : ViewModel() {
             total += chapter.lessons.size
             completed += chapter.lessons.count { it.isTaught }
         }
-        val percentage = if (total > 0) (completed * 100) / total else 0
+        val percentage = if (total > 0) (completed.toDouble() * 100.0) / total.toDouble() else 0.0
         _overallProgress.postValue(SyllabusProgress(total, completed, percentage))
     }
 

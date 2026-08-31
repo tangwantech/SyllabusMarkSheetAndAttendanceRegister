@@ -6,19 +6,28 @@ import androidx.lifecycle.viewModelScope
 import com.example.syllabusmarksheetandattendanceregister.datamodels.UserData
 import com.example.syllabusmarksheetandattendanceregister.repositories.LoginRepository
 import com.example.syllabusmarksheetandattendanceregister.repositories.UserRepository
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginActivityViewModel: ViewModel(){
     private val loginRepo = LoginRepository()
     fun loginUser(context: Context, username: String, password: String, deviceId: String, listener: LoginRepository.LoginListener){
-//        println("User login... in LoginActivityViewmodel")
-        loginRepo.loginUser(username, password, deviceId, listener, object: LoginRepository.UserDataListener {
-            override fun onUserDataReceived(userData: UserData) {
-//                println("User data in login viewmodel: $userData")
+        loginRepo.loginUser(username, password, deviceId, object : LoginRepository.LoginListener {
+            override fun onLoginSuccessful(userData: UserData) {
                 UserRepository.updateUserData(userData)
                 viewModelScope.launch {
-                    UserRepository.saveToDatabase(context.applicationContext)
+                    // Use NonCancellable to ensure data is saved even if fragment is destroyed/replaced immediately
+                    withContext(NonCancellable) {
+                        UserRepository.saveToDatabase(context.applicationContext)
+                    }
+                    // Call the fragment's listener after the database save attempt
+                    listener.onLoginSuccessful(userData)
                 }
+            }
+
+            override fun onLoginFailed(error: String?) {
+                listener.onLoginFailed(error)
             }
         })
     }

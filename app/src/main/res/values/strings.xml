@@ -10,7 +10,7 @@
     <string name="welcome_label">Welcome,</string>
     <string name="dashboard_title">Dashboard</string>
     <string name="syllabus_coverage">Syllabus Coverage</string>
-    <string name="marksheet">Marksheet</string>
+    <string name="marksheet">Mark Sheet</string>
     <string name="attendance_register">Attendance Register</string>
     <string name="sign_out">Sign Out</string>
 
@@ -28,11 +28,21 @@
     <string name="overall_syllabus_progress">Overall Syllabus Progress</string>
     <string name="overall_lesson_stats_format">Lessons: %1$d / %2$d completed</string>
     <string name="percentage_format">%1$d%%</string>
+    <string name="percentage_decimal_format">%1$.2f%%</string>
 
     <string name="marksheet_header_subject_format">Subject: %1$s</string>
     <string name="marksheet_header_subclass_format">Class: %1$s</string>
     <string name="student_reg_id_format">REG ID: %1$s</string>
     <string name="student_gender_format">GENDER: %1$s</string>
+    <string name="student_matricule_gender_format">REG ID: %1$s | GENDER: %2$s</string>
+    <string name="student_subject_class_format">Subject: %1$s | Class: %2$s</string>
+    <string name="accumulated_absences_format">Accumulated Absences: %1$d</string>
+    <string name="absence_weight_format">Class: %1$s | Absence Weight: %2$s</string>
+    <string name="attendance_date_format">Date: %1$s</string>
+    <string name="absences_count_format">Absences: %1$d</string>
+    <string name="label_present">PRESENT</string>
+    <string name="label_absent">ABSENT</string>
+    <string name="attendance_stats_format">Total: %1$d  |  Present: %2$d  |  Absent: %3$d</string>
     <string name="student_score_format">Score: %1$s / 20</string>
     <string name="save_marksheet">Save Marksheet</string>
     <string name="marksheet_stats_combined_format">Enrolled: %1$d  |  Passed: %2$d  |  %3$.1f%%</string>

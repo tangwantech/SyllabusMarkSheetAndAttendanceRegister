@@ -48,7 +48,7 @@ class DashboardFragment : Fragment() {
         }
 
         binding.btnAttendance.setOnClickListener {
-            Toast.makeText(requireContext(), "Attendance Register clicked", Toast.LENGTH_SHORT).show()
+            startActivity(AttendanceRegisterActivity.getIntent(requireContext()))
         }
 
         binding.btnLogout.setOnClickListener {

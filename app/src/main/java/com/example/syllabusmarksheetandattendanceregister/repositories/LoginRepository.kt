@@ -18,7 +18,7 @@ import java.io.IOException
 class LoginRepository {
     private val client: OkHttpClient = OkHttpClient.Builder().build()
     private val mediaType = "application/json;charset=utf-8".toMediaType()
-    fun loginUser(username: String, password: String, deviceId: String, listener: LoginListener, userDataListener: UserDataListener){
+    fun loginUser(username: String, password: String, deviceId: String, listener: LoginListener){
         val params = mapOf(
             "username" to username,
             "password" to password,
@@ -48,9 +48,8 @@ class LoginRepository {
                         val result = JSONObject(responseBody)["result"].toString()
                         println(result)
 
-                        listener.onLoginSuccessful()
                         val userData = Gson().fromJson<UserData>(result, UserData::class.java)
-                        userDataListener.onUserDataReceived(userData)
+                        listener.onLoginSuccessful(userData)
                     } catch (e: Exception) {
                         println(e.message.toString())
                         listener.onLoginFailed(e.message.toString())
@@ -71,13 +70,7 @@ class LoginRepository {
     }
 
     interface LoginListener {
-        fun onLoginSuccessful()
+        fun onLoginSuccessful(userData: UserData)
         fun onLoginFailed(error: String?)
     }
-
-    interface UserDataListener {
-        fun onUserDataReceived(userData: UserData)
-    }
-
-
 }

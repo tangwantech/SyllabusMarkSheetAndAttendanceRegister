@@ -36,16 +36,15 @@
 
             <View
                 android:id="@+id/headerDivider"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="3dp"
                 android:layout_marginTop="8dp"
-                android:background="@color/colorPrimaryLight"
+                android:background="@color/colorAccent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textHeaderSubject" />
 
             <TextView
-                android:id="@+id/textHeaderSubclass"
+                android:id="@+id/textHeaderClass"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -54,22 +53,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/headerDivider"
-                tools:text="Subclass: A" />
+                tools:text="Class: Form 5 | Absence Weight: 2" />
 
             <TextView
-                android:id="@+id/textHeaderSequence"
+                android:id="@+id/textHeaderDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="#E0E0E0"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textHeaderSubclass"
-                tools:text="Sequence 1" />
+                app:layout_constraintTop_toBottomOf="@+id/textHeaderClass"
+                tools:text="Date: 2024-05-20" />
 
-            <!-- Overall Stats Badge -->
             <TextView
-                android:id="@+id/textHeaderOverallStats"
+                android:id="@+id/textHeaderStats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -79,44 +77,14 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/textHeaderSequence"
-                tools:text="Enrolled: 25  |  Passed: 15  |  60.0%" />
-
-            <!-- Male Stats Badge -->
-            <TextView
-                android:id="@+id/textHeaderMalesCombined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_enrolled_badge"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/textHeaderOverallStats"
-                tools:text="Males(M): 15  |  Passed: 10  |  66.7%" />
-
-            <!-- Female Stats Badge -->
-            <TextView
-                android:id="@+id/textHeaderFemalesCombined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_enrolled_badge"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/textHeaderMalesCombined"
-                tools:text="Females(F): 10  |  Passed: 5  |  50.0%" />
+                app:layout_constraintTop_toBottomOf="@+id/textHeaderDate"
+                tools:text="Total: 25  |  Present: 15  |  Absent: 10" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerStudents"
+        android:id="@+id/recyclerAttendance"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
@@ -124,31 +92,16 @@
         android:paddingBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardHeader"
-        tools:listitem="@layout/item_student" />
+        tools:listitem="@layout/item_student_attendance" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSaveMarkSheet"
+        android:id="@+id/btnSaveAttendance"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="16dp"
-        android:text="@string/save_marksheet"
+        android:text="Save Attendance"
         app:cornerRadius="12dp"
         app:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/progressOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#99000000"
-        android:elevation="10dp"
-        android:visibility="gone">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminateTint="@color/white" />
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

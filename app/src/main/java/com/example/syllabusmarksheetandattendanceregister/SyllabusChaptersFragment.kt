@@ -54,12 +54,14 @@ class SyllabusChaptersFragment : Fragment(), ChapterClickListener {
     private fun setupObservers() {
         viewModel.chapters.observe(viewLifecycleOwner) { chapters ->
             if (chapters != null) {
+                binding.textSubject.text = getString(R.string.marksheet_header_subject_format, viewModel.selectedSubject.value)
+                binding.textClass.text = getString(R.string.marksheet_header_subclass_format, viewModel.selectedMainClass.value)
                 adapter.updateChapters(chapters)
             }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressChapters.visibility = if (isLoading) View.VISIBLE else View.GONE
+            toggleProgress(isLoading)
             binding.btnSaveSyllabus.isEnabled = !isLoading
         }
 
@@ -70,8 +72,8 @@ class SyllabusChaptersFragment : Fragment(), ChapterClickListener {
                 progress.totalLessons
             )
             binding.overallProgressIndicator.max = 100
-            binding.overallProgressIndicator.progress = progress.percentage
-            binding.textOverallPercentage.text = getString(R.string.percentage_format, progress.percentage)
+            binding.overallProgressIndicator.progress = progress.percentage.toInt()
+            binding.textOverallPercentage.text = getString(R.string.percentage_decimal_format, progress.percentage)
         }
     }
 
@@ -107,6 +109,8 @@ class SyllabusChaptersFragment : Fragment(), ChapterClickListener {
             .addToBackStack(null)
             .commit()
     }
-
+    private fun toggleProgress(show: Boolean) {
+        binding.progressOverlay.visibility = if (show) View.VISIBLE else View.GONE
+    }
 
 }

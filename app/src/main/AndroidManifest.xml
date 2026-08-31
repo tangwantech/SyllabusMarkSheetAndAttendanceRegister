@@ -32,6 +32,11 @@
             android:exported="false"
             android:label="@string/marksheet"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".AttendanceRegisterActivity"
+            android:exported="false"
+            android:label="@string/attendance_register"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

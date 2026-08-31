@@ -4,15 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.syllabusmarksheetandattendanceregister.datamodels.MarkSheetData
-import com.example.syllabusmarksheetandattendanceregister.repositories.MarkSheetRepository
+import com.example.syllabusmarksheetandattendanceregister.datamodels.StudentAttendanceData
+import com.example.syllabusmarksheetandattendanceregister.datamodels.StudentsAttendanceData
+import com.example.syllabusmarksheetandattendanceregister.repositories.AttendanceRegisterRepository
 import com.example.syllabusmarksheetandattendanceregister.repositories.UserRepository
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class MarkSheetViewModel : ViewModel() {
+class AttendanceRegisterViewModel : ViewModel() {
 
-    private val markSheetRepository = MarkSheetRepository()
+    private val repository = AttendanceRegisterRepository()
 
     private val _years = MutableLiveData<List<String>>()
     val years: LiveData<List<String>> = _years
@@ -26,9 +27,6 @@ class MarkSheetViewModel : ViewModel() {
     private val _subclasses = MutableLiveData<List<String>>()
     val subclasses: LiveData<List<String>> = _subclasses
 
-    private val _sequences = MutableLiveData<List<String>>()
-    val sequences: LiveData<List<String>> = _sequences
-
     private val _selectedYear = MutableLiveData<String?>()
     val selectedYear: LiveData<String?> = _selectedYear
 
@@ -41,11 +39,14 @@ class MarkSheetViewModel : ViewModel() {
     private val _selectedSubclass = MutableLiveData<String?>()
     val selectedSubclass: LiveData<String?> = _selectedSubclass
 
-    private val _selectedSequence = MutableLiveData<String?>()
-    val selectedSequence: LiveData<String?> = _selectedSequence
+    private val _selectedDate = MutableLiveData<String?>()
+    val selectedDate: LiveData<String?> = _selectedDate
 
-    private val _markSheetData = MutableLiveData<MarkSheetData?>()
-    val markSheetData: LiveData<MarkSheetData?> = _markSheetData
+    private val _selectedAbsenceWeight = MutableLiveData<String?>()
+    val selectedAbsenceWeight: LiveData<String?> = _selectedAbsenceWeight
+
+    private val _students = MutableLiveData<List<StudentAttendanceData>?>()
+    val students: LiveData<List<StudentAttendanceData>?> = _students
 
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> = _isLoading
@@ -53,14 +54,17 @@ class MarkSheetViewModel : ViewModel() {
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    private val _navigateToMarkSheetEvent = MutableLiveData<Boolean>(false)
-    val navigateToMarkSheetEvent: LiveData<Boolean> = _navigateToMarkSheetEvent
+    private val _navigateToRegisterEvent = MutableLiveData<Boolean>(false)
+    val navigateToRegisterEvent: LiveData<Boolean> = _navigateToRegisterEvent
 
-    private var isDataSaved = false
+    private val _selectedStudent = MutableLiveData<StudentAttendanceData?>()
+    val selectedStudent: LiveData<StudentAttendanceData?> = _selectedStudent
+
+    private val _navigateToDetailsEvent = MutableLiveData<Boolean>(false)
+    val navigateToDetailsEvent: LiveData<Boolean> = _navigateToDetailsEvent
 
     init {
         observeUserData()
-        _sequences.value = listOf("Sequence 1", "Sequence 2", "Sequence 3", "Sequence 4", "Sequence 5", "Sequence 6")
     }
 
     private fun observeUserData() {
@@ -105,22 +109,28 @@ class MarkSheetViewModel : ViewModel() {
     }
 
     fun selectSubclass(subclass: String) { _selectedSubclass.value = subclass }
-    fun selectSequence(sequence: String) { _selectedSequence.value = sequence }
+    
+    fun selectDate(date: String) { _selectedDate.value = date }
 
-    fun fetchMarkSheet() {
+    fun selectAbsenceWeight(absenceWeight: String) { _selectedAbsenceWeight.value = absenceWeight }
+
+    fun fetchAttendanceRegister() {
         val sessionToken = UserRepository.getSessionToken() ?: return
         val year = _selectedYear.value ?: return
         val subject = _selectedSubject.value ?: return
         val mainClass = _selectedMainClass.value ?: return
         val subclass = _selectedSubclass.value ?: return
-        val sequence = _selectedSequence.value ?: return
+        val date = _selectedDate.value ?: return
 
-        _isLoading.postValue(true)
-        markSheetRepository.fetchMarkSheet(sessionToken, year, subject, mainClass, subclass, sequence, 
-            object : MarkSheetRepository.FetchMarksheetListener {
-                override fun onMarkSheetAvailable(result: MarkSheetData) {
-                    _markSheetData.postValue(result)
-                    _navigateToMarkSheetEvent.postValue(true)
+        _isLoading.value = true
+        _error.value = null
+        
+        repository.fetchAttendanceRegister(sessionToken, year, mainClass, subclass, subject, date,
+            object : AttendanceRegisterRepository.FetchAttendanceRegisterListener {
+
+                override fun onFetchSuccessful(students: List<StudentAttendanceData>) {
+                    _students.postValue(students)
+                    _navigateToRegisterEvent.postValue(true)
                     _isLoading.postValue(false)
                 }
 
@@ -131,37 +141,41 @@ class MarkSheetViewModel : ViewModel() {
             })
     }
 
-    fun updateStudentScore(studentIndex: Int, score: Double) {
-        val currentData = _markSheetData.value ?: return
-        val students = currentData.students.toMutableList()
-        if (studentIndex in students.indices) {
-            students[studentIndex] = students[studentIndex].copy(score = score)
-            _markSheetData.value = currentData.copy(students = students)
+    fun updateStudentAttendance(position: Int, isPresent: Boolean) {
+        val currentStudents = _students.value ?: return
+        if (position in currentStudents.indices) {
+            val student = currentStudents[position]
+            val date = _selectedDate.value ?: return
+            
+            val newAttendances = student.attendances?.let { HashMap(it) } ?: hashMapOf()
+            newAttendances[date] = com.example.syllabusmarksheetandattendanceregister.datamodels.Attendance(
+                isPresent = isPresent,
+                absenceCount = _selectedAbsenceWeight.value?.toIntOrNull() ?: 0
+            )
+            
+            val updatedStudent = student.copy(attendances = newAttendances)
+            val updatedList = currentStudents.toMutableList()
+            updatedList[position] = updatedStudent
+            _students.value = updatedList
         }
     }
 
-    fun updateStudentRegistration(studentIndex: Int, isRegistered: Boolean) {
-        val currentData = _markSheetData.value ?: return
-        val students = currentData.students.toMutableList()
-        students[studentIndex].isRegistered = isRegistered
-        _markSheetData.value = currentData.copy(students = students)
-    }
-
-    fun saveMarkSheet(listener: MarkSheetRepository.UpdateMarkSheetListener) {
+    fun saveAttendanceRegister(listener: AttendanceRegisterRepository.SaveAttendanceRegisterListener) {
         val sessionToken = UserRepository.getSessionToken() ?: return
         val year = _selectedYear.value ?: return
         val subject = _selectedSubject.value ?: return
         val mainClass = _selectedMainClass.value ?: return
         val subclass = _selectedSubclass.value ?: return
-        val sequence = _selectedSequence.value ?: return
-        val students = _markSheetData.value?.students ?: return
+        val students = _students.value ?: return
+        
+        val studentsAttendanceData = StudentsAttendanceData(students)
 
         _isLoading.postValue(true)
-        markSheetRepository.updateMarkSheet(sessionToken, year, subject, mainClass, subclass, sequence, students, 
-            object : MarkSheetRepository.UpdateMarkSheetListener {
-                override fun onUpdateSuccessful(result: String) {
+        repository.saveAttendanceRegister(sessionToken, year, mainClass, subclass, subject, studentsAttendanceData, 
+            object : AttendanceRegisterRepository.SaveAttendanceRegisterListener {
+                override fun onSaveSuccessful(result: String) {
                     _isLoading.postValue(false)
-                    listener.onUpdateSuccessful(result)
+                    listener.onSaveSuccessful(result)
                 }
 
                 override fun onError(error: String) {
@@ -171,23 +185,17 @@ class MarkSheetViewModel : ViewModel() {
             })
     }
 
-    fun onNavigatedToMarkSheet() {
-        _navigateToMarkSheetEvent.value = false
+    fun onNavigatedToRegister() {
+        _navigateToRegisterEvent.value = false
     }
 
-    fun isFormValid(): Boolean {
-        return _selectedYear.value != null &&
-                _selectedSubject.value != null &&
-                _selectedMainClass.value != null &&
-                _selectedSubclass.value != null &&
-                _selectedSequence.value != null
+    fun selectStudent(position: Int) {
+        val student = _students.value?.getOrNull(position) ?: return
+        _selectedStudent.value = student
+        _navigateToDetailsEvent.value = true
     }
 
-    fun updateIsDataSave(state: Boolean){
-        isDataSaved = state
-    }
-
-    fun getIsDataSaved(): Boolean{
-        return isDataSaved
+    fun onNavigatedToDetails() {
+        _navigateToDetailsEvent.value = false
     }
 }

@@ -67,39 +67,8 @@
                 android:text="@string/dashboard_title"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <!-- Syllabus Coverage Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSyllabus"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_marginBottom="16dp"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="@string/syllabus_coverage"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                app:cornerRadius="12dp"
-                app:icon="@android:drawable/ic_menu_agenda"
-                app:iconPadding="12dp" />
-
-            <!-- Marksheet Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnMarkSheet"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_marginBottom="16dp"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="@string/marksheet"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                app:cornerRadius="12dp"
-                app:icon="@android:drawable/ic_menu_edit"
-                app:iconPadding="12dp" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <!-- Attendance Register Button -->
             <com.google.android.material.button.MaterialButton
@@ -115,7 +84,39 @@
                 android:textSize="18sp"
                 app:cornerRadius="12dp"
                 app:icon="@android:drawable/ic_menu_myplaces"
-                app:iconPadding="12dp" />
+                app:iconPadding="4dp" />
+
+            <!-- Syllabus Coverage Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSyllabus"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="16dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/syllabus_coverage"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_agenda"
+                app:iconPadding="4dp" />
+
+            <!-- Marksheet Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMarkSheet"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="16dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/marksheet"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_edit"
+                app:iconPadding="4dp" />
 
             <View
                 android:layout_width="match_parent"

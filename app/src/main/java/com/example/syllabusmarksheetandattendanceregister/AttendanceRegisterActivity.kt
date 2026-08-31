@@ -3,57 +3,58 @@ package com.example.syllabusmarksheetandattendanceregister
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.syllabusmarksheetandattendanceregister.databinding.ActivityMarkSheetBinding
+import com.example.syllabusmarksheetandattendanceregister.databinding.ActivityAttendanceRegisterBinding
 import com.example.syllabusmarksheetandattendanceregister.repositories.UserRepository
-import com.example.syllabusmarksheetandattendanceregister.viewmodels.MarkSheetViewModel
+import com.example.syllabusmarksheetandattendanceregister.viewmodels.AttendanceRegisterViewModel
 import kotlinx.coroutines.launch
 
-class MarkSheetActivity : AppCompatActivity() {
+class AttendanceRegisterActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMarkSheetBinding
-    private lateinit var viewModel: MarkSheetViewModel
+    private lateinit var binding: ActivityAttendanceRegisterBinding
+    private lateinit var viewModel: AttendanceRegisterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMarkSheetBinding.inflate(layoutInflater)
+        binding = ActivityAttendanceRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initViewModel()
+        
+        viewModel = ViewModelProvider(this)[AttendanceRegisterViewModel::class.java]
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = getString(R.string.marksheet)
+        supportActionBar?.title = getString(R.string.attendance_register)
 
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
         lifecycleScope.launch {
-            UserRepository.loadFromDatabase(this@MarkSheetActivity)
+            UserRepository.loadFromDatabase(this@AttendanceRegisterActivity)
             viewModel.loadInitialData()
 
             if (savedInstanceState == null) {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.mark_sheet_container, MarkSheetNavFragment())
+                    .replace(R.id.attendance_container, AttendanceNavFragment())
                     .commit()
             }
         }
+
+        setupObservers()
     }
 
-    private fun initViewModel(){
-        viewModel = ViewModelProvider(this)[MarkSheetViewModel::class.java]
-    }
-    private fun toggleProgress(show: Boolean) {
-        binding.progressOverlay.visibility = if (show) View.VISIBLE else View.GONE
+    private fun setupObservers() {
+        viewModel.isLoading.observe(this) { isLoading ->
+            binding.progressOverlay.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
     }
 
     companion object {
         fun getIntent(context: Context): Intent {
-            return Intent(context, MarkSheetActivity::class.java)
+            return Intent(context, AttendanceRegisterActivity::class.java)
         }
     }
 }
