@@ -9,9 +9,13 @@
 
     <string name="welcome_label">Welcome,</string>
     <string name="dashboard_title">Dashboard</string>
+    <string name="quick_actions">Quick Actions</string>
     <string name="syllabus_coverage">Syllabus Coverage</string>
+    <string name="syllabus_desc">Monitor academic progress</string>
     <string name="marksheet">Mark Sheet</string>
+    <string name="marksheet_desc">Manage students test scores</string>
     <string name="attendance_register">Attendance Register</string>
+    <string name="attendance_desc">Track student attendance</string>
     <string name="sign_out">Sign Out</string>
 
     <string name="select_options">Select Options</string>

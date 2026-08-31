@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="#F5F7F8">
 
-    <!-- Header Background -->
+    <!-- Header Background with Gradient -->
     <View
         android:id="@+id/headerView"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="240dp"
+        android:background="@drawable/bg_dashboard_header"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Welcome Text -->
+    <!-- Welcome Section -->
     <TextView
         android:id="@+id/welcomeLabel"
         android:layout_width="wrap_content"
@@ -22,121 +22,246 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="60dp"
         android:text="@string/welcome_label"
-        android:textColor="#CCFFFFFF"
+        android:textColor="#E0E0E0"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- User Full Name -->
     <TextView
         android:id="@+id/userName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:text="User Full Name"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/welcomeLabel" />
+        app:layout_constraintTop_toBottomOf="@id/welcomeLabel"
+        tools:text="John Doe" />
 
-    <!-- Dashboard Content Card -->
+    <!-- Main Content Card -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="180dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="32dp"
-        app:cardElevation="4dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="32dp">
+            android:clipToPadding="false"
+            android:padding="24dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:text="@string/dashboard_title"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="gone"/>
+                android:orientation="vertical">
 
-            <!-- Attendance Register Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAttendance"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_marginBottom="16dp"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="@string/attendance_register"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                app:cornerRadius="12dp"
-                app:icon="@android:drawable/ic_menu_myplaces"
-                app:iconPadding="4dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/quick_actions"
+                    android:textColor="#333333"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <!-- Syllabus Coverage Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSyllabus"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_marginBottom="16dp"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="@string/syllabus_coverage"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                app:cornerRadius="12dp"
-                app:icon="@android:drawable/ic_menu_agenda"
-                app:iconPadding="4dp" />
+                <!-- Attendance Register Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnAttendance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#F0F0F0">
 
-            <!-- Marksheet Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnMarkSheet"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:layout_marginBottom="16dp"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="@string/marksheet"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                app:cornerRadius="12dp"
-                app:icon="@android:drawable/ic_menu_edit"
-                app:iconPadding="4dp" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                        <ImageView
+                            android:id="@+id/iconAttendance"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_enrolled_badge"
+                            android:backgroundTint="#E8F5F3"
+                            android:padding="12dp"
+                            android:src="@android:drawable/ic_menu_myplaces"
+                            android:contentDescription="@string/attendance_register"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/colorPrimary" />
 
-            <!-- Sign Out Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogout"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_out"
-                android:textColor="@color/error"
-                android:textSize="14sp"
-                app:icon="@android:drawable/ic_lock_power_off"
-                app:iconSize="18dp"
-                app:iconTint="@color/error" />
+                        <TextView
+                            android:id="@+id/titleAttendance"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/attendance_register"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iconAttendance"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/attendance_desc"
+                            android:textColor="#757575"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/titleAttendance"
+                            app:layout_constraintTop_toBottomOf="@id/titleAttendance" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Syllabus Coverage Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnSyllabus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#F0F0F0">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/iconSyllabus"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_enrolled_badge"
+                            android:backgroundTint="#FEF7ED"
+                            android:padding="12dp"
+                            android:src="@android:drawable/ic_menu_agenda"
+                            android:contentDescription="@string/syllabus_coverage"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/colorAccent" />
+
+                        <TextView
+                            android:id="@+id/titleSyllabus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/syllabus_coverage"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iconSyllabus"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/syllabus_desc"
+                            android:textColor="#757575"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/titleSyllabus"
+                            app:layout_constraintTop_toBottomOf="@id/titleSyllabus" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Marksheet Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnMarkSheet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#F0F0F0">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/iconMarkSheet"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_enrolled_badge"
+                            android:backgroundTint="#FDF2F2"
+                            android:padding="12dp"
+                            android:src="@android:drawable/ic_menu_edit"
+                            android:contentDescription="@string/marksheet"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="#BA1A1A" />
+
+                        <TextView
+                            android:id="@+id/titleMarkSheet"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/marksheet"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iconMarkSheet"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/marksheet_desc"
+                            android:textColor="#757575"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/titleMarkSheet"
+                            app:layout_constraintTop_toBottomOf="@id/titleMarkSheet" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Logout Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLogout"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/sign_out"
+                    android:textColor="@color/error"
+                    android:textSize="14sp"
+                    app:icon="@android:drawable/ic_lock_power_off"
+                    app:iconSize="18dp"
+                    app:iconTint="@color/error" />
+
+            </LinearLayout>
+        </ScrollView>
     </com.google.android.material.card.MaterialCardView>
 
     <!-- Progress Overlay -->
