@@ -51,6 +51,10 @@ class DashboardFragment : Fragment() {
             startActivity(AttendanceRegisterActivity.getIntent(requireContext()))
         }
 
+        binding.btnStudentsDatabase.setOnClickListener {
+            startActivity(StudentsDatabaseActivity.getIntent(requireContext()))
+        }
+
         binding.btnLogout.setOnClickListener {
             performLogout()
         }

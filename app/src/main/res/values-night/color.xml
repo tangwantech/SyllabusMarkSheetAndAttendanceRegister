@@ -2,13 +2,19 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#01665D</color>
-    <color name="colorPrimaryDark">#01645A</color>
-    <color name="colorOnPrimary">@color/white</color>
-    <color name="colorAccent">#E79315</color>
-    <color name="error">#BA1A1A</color>
-    <color name="onError">#FFFFFF</color>
-    <color name="errorContainer">#FFDAD6</color>
-    <color name="onErrorContainer">#410002</color>
-    <color name="colorPrimaryLight">#43928A</color>
+    <color name="colorPrimary">#02DAC5</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorOnPrimary">#000000</color>
+    <color name="colorAccent">#FFB74D</color>
+    <color name="error">#CF6679</color>
+    <color name="onError">#000000</color>
+    <color name="errorContainer">#B00020</color>
+    <color name="onErrorContainer">#FFFFFF</color>
+    <color name="colorPrimaryLight">#66FFF9</color>
+
+    <!-- Dark theme specific backgrounds and surfaces -->
+    <color name="backgroundColor">#121212</color>
+    <color name="surfaceColor">#1E1E1E</color>
+    <color name="onBackgroundColor">#FFFFFF</color>
+    <color name="onSurfaceColor">#FFFFFF</color>
 </resources>

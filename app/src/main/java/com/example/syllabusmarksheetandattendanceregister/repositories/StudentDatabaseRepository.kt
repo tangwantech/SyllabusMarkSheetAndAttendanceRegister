@@ -3,8 +3,8 @@ package com.example.syllabusmarksheetandattendanceregister.repositories
 import android.util.Log
 import com.example.syllabusmarksheetandattendanceregister.credentials.Credentials.Companion.APPLICATION_ID
 import com.example.syllabusmarksheetandattendanceregister.credentials.Credentials.Companion.CLIENT_KEY
-import com.example.syllabusmarksheetandattendanceregister.datamodels.MarkSheetData
-import com.example.syllabusmarksheetandattendanceregister.datamodels.Student
+import com.example.syllabusmarksheetandattendanceregister.datamodels.StudentData
+import com.example.syllabusmarksheetandattendanceregister.datamodels.StudentsData
 import com.google.gson.Gson
 import okhttp3.Call
 import okhttp3.Callback
@@ -16,21 +16,22 @@ import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
 
-class MarkSheetRepository {
-    private val client: OkHttpClient = OkHttpClient.Builder().build()
-    private val mediaType = "application/json;charset=utf-8".toMediaType()
 
-    fun fetchMarkSheet(sessionToken: String, academicYear: String, subject: String, mainClass: String, subclass: String, sequence: String, listener: FetchMarksheetListener){
+
+class StudentDatabaseRepository {
+    private val client: OkHttpClient = OkHttpClient.Builder().build()
+    private val mediaType = "application/json; charset=utf-8".toMediaType()
+
+    fun fetchStudents(sessionToken: String, academicYear: String, subject: String, mainClass: String, subclass: String, listener: FetchStudentsListener){
         val params = hashMapOf<String, String>(
             "sessionToken" to sessionToken,
             "academicYear" to academicYear,
             "subject" to subject,
             "mainClass" to mainClass,
-            "subclass" to subclass,
-            "sequence" to sequence
+            "subclass" to subclass
         )
 
-        val url = "https://parseapi.back4app.com/functions/fetchMarkSheet"
+        val url = "https://parseapi.back4app.com/functions/fetchStudents"
         val requestBody = JSONObject(params).toString().toRequestBody(mediaType)
         val request = Request.Builder()
             .url(url)
@@ -48,39 +49,37 @@ class MarkSheetRepository {
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
                     val responseBody = response.body?.string().toString()
-                    val result = JSONObject(responseBody)["result"].toString()
-                    val markSheetData = Gson().fromJson<MarkSheetData>(result, MarkSheetData::class.java)
-                    println("Marksheet from server: $markSheetData")
-                    Log.d("MarksheetRepoFetch", markSheetData.toString())
-                    listener.onMarkSheetAvailable(markSheetData)
-                }else{
+                    try {
+                        val result = JSONObject(responseBody)["result"].toString()
+                        val studentsData = Gson().fromJson(result, StudentsData::class.java)
+                        listener.onStudentsAvailable(studentsData.students)
+                    } catch (e: Exception) {
+                        listener.onError("Failed to parse response")
+                    }
+                } else {
                     listener.onError(response.body?.string().toString())
                 }
             }
         })
-
     }
 
-    fun updateMarkSheet(sessionToken: String, academicYear: String, subject: String,
-                        mainClass: String, subclass: String, sequence: String,
-                        students: List<Student>, listener: UpdateMarkSheetListener){
+    interface FetchStudentsListener {
+        fun onStudentsAvailable(students: List<StudentData>)
+        fun onError(error: String)
+    }
 
-        val tempStd = toListHashMap(students)
-
-//        println("Students before update to server: $tempStd")
-        Log.d("MarksheetUpdate", tempStd.toString())
+    fun addStudents(sessionToken: String, academicYear: String, subject: String, mainClass: String, subclass: String, students: List<StudentData>, listener: AddStudentsListener){
+        val studs = JSONObject(Gson().toJson(StudentsData(students)))
         val params = hashMapOf<String, Any>(
             "sessionToken" to sessionToken,
             "academicYear" to academicYear,
             "subject" to subject,
             "mainClass" to mainClass,
             "subclass" to subclass,
-            "sequence" to sequence,
-            "students" to tempStd
+            "students" to studs.getJSONArray("students")
         )
 
-
-        val url = "https://parseapi.back4app.com/functions/updateMarkSheet"
+        val url = "https://parseapi.back4app.com/functions/addStudents"
         val requestBody = JSONObject(params).toString().toRequestBody(mediaType)
         val request = Request.Builder()
             .url(url)
@@ -90,8 +89,10 @@ class MarkSheetRepository {
             .addHeader("X-Parse-REST-API-Key", CLIENT_KEY)
             .build()
 
+
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
+                Log.d("SaveAttendanceRegisterOnFailure", e.message.toString())
                 listener.onError(e.message.toString())
             }
 
@@ -99,8 +100,8 @@ class MarkSheetRepository {
                 if (response.isSuccessful) {
                     val responseBody = response.body?.string().toString()
                     val result = JSONObject(responseBody)["result"].toString()
-
-                    listener.onUpdateSuccessful(result)
+                    Log.d("StudentsAdded", result)
+                    listener.onStudentsAdded(result)
                 }else{
                     listener.onError(response.body?.string().toString())
                 }
@@ -109,28 +110,8 @@ class MarkSheetRepository {
     }
 
 
-    fun toListHashMap(data: List<Student>): List<HashMap<String, Any>>{
-        val students = mutableListOf<HashMap<String, Any>>()
-        for (std in data){
-            val temp = hashMapOf<String, Any>()
-            temp["name"] = std.name
-            temp["matricule"] = std.matricule
-            temp["gender"] = std.gender
-            temp["isRegistered"] = std.isRegistered
-            temp["score"] = std.score
-            students.add(temp)
-        }
-        return students
-    }
-
-    interface FetchMarksheetListener{
-        fun onMarkSheetAvailable(result: MarkSheetData)
-        fun onError(error:String)
-    }
-
-    interface UpdateMarkSheetListener {
-        fun onUpdateSuccessful(result: String)
+    interface AddStudentsListener{
+        fun onStudentsAdded(result: String)
         fun onError(error: String)
     }
 }
-

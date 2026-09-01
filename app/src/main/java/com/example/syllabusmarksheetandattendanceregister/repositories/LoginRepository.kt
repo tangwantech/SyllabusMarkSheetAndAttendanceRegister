@@ -16,9 +16,11 @@ import org.json.JSONObject
 import java.io.IOException
 
 class LoginRepository {
-    private val client: OkHttpClient = OkHttpClient.Builder().build()
+    private val client: OkHttpClient = OkHttpClient()
     private val mediaType = "application/json;charset=utf-8".toMediaType()
+
     fun loginUser(username: String, password: String, deviceId: String, listener: LoginListener){
+        // Using custom Cloud Function "login" via POST
         val params = mapOf(
             "username" to username,
             "password" to password,
@@ -45,23 +47,27 @@ class LoginRepository {
                 val responseBody = response.body?.string() ?: ""
                 if (response.isSuccessful) {
                     try {
-                        val result = JSONObject(responseBody)["result"].toString()
-                        println(result)
-
-                        val userData = Gson().fromJson<UserData>(result, UserData::class.java)
-                        listener.onLoginSuccessful(userData)
+                        // Cloud functions wrap the return value in a "result" field
+                        val json = JSONObject(responseBody)
+                        if (json.has("result")) {
+                            val result = json.getString("result")
+                            val userData = Gson().fromJson<UserData>(result, UserData::class.java)
+                            listener.onLoginSuccessful(userData)
+                        } else {
+                            listener.onLoginFailed("Response missing 'result' field")
+                        }
                     } catch (e: Exception) {
                         println(e.message.toString())
-                        listener.onLoginFailed(e.message.toString())
+                        listener.onLoginFailed("Failed to parse user data: ${e.message}")
                     }
                 } else {
                     val error = try {
                         val json = JSONObject(responseBody)
                         if (json.has("error")) json.getString("error")
-                        else "Login failed: Invalid credentials"
+                        else "Login failed: ${response.code}"
                     } catch (e: Exception) {
                         println(e.message.toString())
-                        e.message.toString()
+                        "Login failed: " + response.code
                     }
                     listener.onLoginFailed(error)
                 }
