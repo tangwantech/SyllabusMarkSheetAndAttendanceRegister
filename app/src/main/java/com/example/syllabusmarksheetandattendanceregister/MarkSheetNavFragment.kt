@@ -35,6 +35,11 @@ class MarkSheetNavFragment : Fragment() {
         setupListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+        restoreSelections()
+    }
+
     private fun restoreSelections() {
         binding.spinnerYear.setText(viewModel.selectedYear.value, false)
         binding.spinnerSubject.setText(viewModel.selectedSubject.value, false)

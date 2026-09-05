@@ -43,10 +43,34 @@ class StudentsDatabaseFragment : Fragment() {
         binding.fabAddStudent.setOnClickListener {
             showAddStudentDialog()
         }
+
+        binding.btnSaveStudents.setOnClickListener {
+            saveStudents()
+        }
+    }
+
+    private fun saveStudents() {
+        viewModel.saveStudents(object : com.example.syllabusmarksheetandattendanceregister.repositories.StudentDatabaseRepository.AddStudentsListener {
+            override fun onStudentsAdded(result: String) {
+                activity?.runOnUiThread {
+                    Toast.makeText(requireContext(), "Database updated successfully", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onError(error: String) {
+                activity?.runOnUiThread {
+                    Toast.makeText(requireContext(), "Failed to update database: $error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
     private fun setupRecyclerView() {
-        adapter = StudentsDatabaseAdapter()
+        adapter = StudentsDatabaseAdapter(
+            onLongClickListener = { index ->
+                viewModel.onLongPressStudent(index)
+            }
+        )
         binding.recyclerStudents.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerStudents.adapter = adapter
     }
@@ -67,11 +91,25 @@ class StudentsDatabaseFragment : Fragment() {
     private fun setupObservers() {
         viewModel.students.observe(viewLifecycleOwner) { students ->
             adapter.updateData(students)
+            val isEmpty = students.isEmpty()
+            binding.noDataTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            binding.btnSaveStudents.isEnabled = !isEmpty
         }
         
         viewModel.error.observe(viewLifecycleOwner) { error ->
             error?.let {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.navigateToDeleteEvent.observe(viewLifecycleOwner) { index ->
+            if (index != null) {
+                viewModel.onNavigatedToDelete()
+                viewModel.toggleStudentSelection(index, true)
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.students_database_container, DeleteStudentsFragment())
+                    .addToBackStack(null)
+                    .commit()
             }
         }
     }
@@ -113,12 +151,23 @@ class StudentsDatabaseFragment : Fragment() {
             val gender = dialogBinding.spinnerGender.text.toString().trim()
             
             viewModel.addStudent(name, matricule, gender)
-            dialog.dismiss()
+            
+            // Clear inputs for next student instead of dismissing
+            dialogBinding.editStudentName.text?.clear()
+            dialogBinding.editMatricule.text?.clear()
+            dialogBinding.spinnerGender.setText("", false)
+            dialogBinding.btnSubmit.isEnabled = false
+            
             Toast.makeText(requireContext(), R.string.student_added_successfully, Toast.LENGTH_SHORT).show()
+        }
+
+        dialogBinding.btnFinish.setOnClickListener {
+            dialog.dismiss()
         }
 
         dialog.show()
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

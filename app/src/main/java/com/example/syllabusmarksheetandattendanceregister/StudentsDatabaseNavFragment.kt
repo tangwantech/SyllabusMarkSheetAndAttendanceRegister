@@ -36,6 +36,19 @@ class StudentsDatabaseNavFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        restoreSelections()
+    }
+
+    private fun restoreSelections() {
+        viewModel.selectedYear.value?.let { binding.spinnerYear.setText(it, false) }
+        viewModel.selectedSubject.value?.let { binding.spinnerSubject.setText(it, false) }
+        viewModel.selectedMainClass.value?.let { binding.spinnerMainClass.setText(it, false) }
+        viewModel.selectedSubclass.value?.let { binding.spinnerSubclass.setText(it, false) }
+        validateInput()
+    }
+
     private fun setupSpinners() {
         viewModel.years.observe(viewLifecycleOwner) { years ->
             val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, years)

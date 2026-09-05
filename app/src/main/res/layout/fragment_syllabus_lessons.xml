@@ -38,4 +38,17 @@
         app:layout_constraintTop_toBottomOf="@id/textLessonStats"
         tools:listitem="@layout/item_lesson" />
 
+    <TextView
+        android:id="@+id/noDataTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data_to_display"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerLessons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recyclerLessons" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,7 +31,7 @@ class StudentDatabaseRepository {
             "subclass" to subclass
         )
 
-        val url = "https://parseapi.back4app.com/functions/fetchStudents"
+        val url = "https://parseapi.back4app.com/functions/fetchStudentsV2"
         val requestBody = JSONObject(params).toString().toRequestBody(mediaType)
         val request = Request.Builder()
             .url(url)
@@ -52,6 +52,7 @@ class StudentDatabaseRepository {
                     try {
                         val result = JSONObject(responseBody)["result"].toString()
                         val studentsData = Gson().fromJson(result, StudentsData::class.java)
+                        Log.d("Students", studentsData.students.toString())
                         listener.onStudentsAvailable(studentsData.students)
                     } catch (e: Exception) {
                         listener.onError("Failed to parse response")
@@ -76,10 +77,10 @@ class StudentDatabaseRepository {
             "subject" to subject,
             "mainClass" to mainClass,
             "subclass" to subclass,
-            "students" to studs.getJSONArray("students")
+            "studentsData" to studs
         )
 
-        val url = "https://parseapi.back4app.com/functions/addStudents"
+        val url = "https://parseapi.back4app.com/functions/addStudentsV1"
         val requestBody = JSONObject(params).toString().toRequestBody(mediaType)
         val request = Request.Builder()
             .url(url)
@@ -112,6 +113,46 @@ class StudentDatabaseRepository {
 
     interface AddStudentsListener{
         fun onStudentsAdded(result: String)
+        fun onError(error: String)
+    }
+
+    fun deleteStudents(sessionToken: String, studentsToDelete: List<StudentData>, listener: DeleteStudentsListener) {
+
+        val students = JSONObject(Gson().toJson(StudentsData(studentsToDelete)))
+        val params = hashMapOf<String, Any>(
+            "sessionToken" to sessionToken,
+            "studentsToDelete" to students
+        )
+
+        val url = "https://parseapi.back4app.com/functions/deleteStudents"
+        val requestBody = JSONObject(params).toString().toRequestBody(mediaType)
+        val request = Request.Builder()
+            .url(url)
+            .post(requestBody)
+            .addHeader("Content-Type", "application/json")
+            .addHeader("X-Parse-Application-Id", APPLICATION_ID)
+            .addHeader("X-Parse-REST-API-Key", CLIENT_KEY)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                listener.onError(e.message.toString())
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string().toString()
+                    val result = JSONObject(responseBody)["result"].toString()
+                    listener.onDeleteSuccessful(result)
+                } else {
+                    listener.onError(response.body?.string().toString())
+                }
+            }
+        })
+    }
+
+    interface DeleteStudentsListener {
+        fun onDeleteSuccessful(result: String)
         fun onError(error: String)
     }
 }

@@ -47,12 +47,25 @@ class StudentsAttendanceAdapter(
         holder.binding.textAbsencesToday.text = "Today\'s Absences: $todayAbsenceDisplay"
         holder.binding.textCumulatedAbsences.text = "Cumulated: ${pastAbsences + todayAbsenceDisplay}"
 
-        // Handle view recycling: remove listener, set state, restore listener
+        // Remove listener before setting state to avoid triggering it during binding
         holder.binding.radioGroup.setOnCheckedChangeListener(null)
+
+        // Handle status display and radio button state
         when (todayAttendance?.isPresent) {
-            true -> holder.binding.radioGroup.check(R.id.radioBtnPresent)
-            false -> holder.binding.radioGroup.check(R.id.radioBtnAbsent)
-            else -> holder.binding.radioGroup.clearCheck()
+            true -> {
+                holder.binding.textStatus.text = "PRESENT"
+                holder.binding.textStatus.setTextColor(context.getColor(R.color.colorPrimary))
+                holder.binding.radioGroup.check(R.id.radioBtnPresent)
+            }
+            false -> {
+                holder.binding.textStatus.text = "ABSENT"
+                holder.binding.textStatus.setTextColor(context.getColor(R.color.error))
+                holder.binding.radioGroup.check(R.id.radioBtnAbsent)
+            }
+            else -> {
+                holder.binding.textStatus.text = ""
+                holder.binding.radioGroup.clearCheck()
+            }
         }
 
         holder.binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -62,6 +75,14 @@ class StudentsAttendanceAdapter(
             holder.binding.textAbsencesToday.text = "Today's Absences: $updatedTodayAbsence"
             holder.binding.textCumulatedAbsences.text = "Cumulated: ${pastAbsences + updatedTodayAbsence}"
             
+            if (isPresent) {
+                holder.binding.textStatus.text = "PRESENT"
+                holder.binding.textStatus.setTextColor(context.getColor(R.color.colorPrimary))
+            } else {
+                holder.binding.textStatus.text = "ABSENT"
+                holder.binding.textStatus.setTextColor(context.getColor(R.color.error))
+            }
+
             listener.onAttendanceChanged(position, isPresent)
         }
 

@@ -57,6 +57,9 @@ class AttendanceRegisterFragment : Fragment(),
                 adapter.updateData(students, absenceWeight)
                 updateHeaderStats(students)
             }
+            val isEmpty = students.isNullOrEmpty()
+            binding.noDataTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            binding.btnSaveAttendance.isEnabled = !isEmpty
         }
         
         binding.textHeaderSubject.text = getString(R.string.marksheet_header_subject_format, viewModel.selectedSubject.value)

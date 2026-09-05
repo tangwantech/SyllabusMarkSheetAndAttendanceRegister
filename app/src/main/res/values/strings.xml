@@ -61,7 +61,7 @@
     <string name="error_invalid_score">Score must be between 0 and 20</string>
 
     <string name="students_database_title">Students Database</string>
-    <string name="students_in_subject_format">Students in %1$s department</string>
+    <string name="students_in_subject_format">%1$s Department</string>
     <string name="header_students_stats_format">Year: %1$s | Class: %2$s | Total: %3$d</string>
     <string name="add_new_student">Add New Student</string>
     <string name="student_name_hint">Student Name</string>
@@ -72,6 +72,7 @@
     <string name="save">Save</string>
     <string name="student_added_successfully">Student added successfully</string>
     <string name="error_fields_required">All fields are required</string>
+    <string name="no_data_to_display">No data to display</string>
 
 <!--    <string name="select_main_class">Select Main Class</string>-->
 <!--    <string name="select_subclass">Select Subclass</string>-->
@@ -105,7 +106,8 @@
     <string name="gender_f">F</string>
     <string name="save">Save</string>
     <string name="student_added_successfully">Student added successfully</string>
-    <string name="error_fields_required">All fields are required</string>-->
+    <string name="error_fields_required">All fields are required</string>
+    <string name="no_data_to_display">No data to display</string>-->
 
 <!--    <string name="teachers_format">Teacher: %1$s</string>-->
 <!--    <string name="no_statistics_to_display">No statistics to display</string>-->

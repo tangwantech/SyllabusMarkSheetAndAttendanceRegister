@@ -58,6 +58,9 @@ class SyllabusChaptersFragment : Fragment(), ChapterClickListener {
                 binding.textClass.text = getString(R.string.marksheet_header_subclass_format, viewModel.selectedMainClass.value)
                 adapter.updateChapters(chapters)
             }
+            val isEmpty = chapters.isNullOrEmpty()
+            binding.noDataTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            binding.btnSaveSyllabus.isEnabled = !isEmpty && (viewModel.isLoading.value == false)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->

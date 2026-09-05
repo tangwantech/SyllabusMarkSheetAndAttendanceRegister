@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
@@ -13,6 +14,16 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
+        <CheckBox
+            android:id="@+id/checkboxDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
         <TextView
             android:id="@+id/textStudentName"
             android:layout_width="0dp"
@@ -21,9 +32,10 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/checkboxDelete"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Student Name" />
+            android:layout_marginStart="8dp"
+            tools:text="Student Name" />
 
         <TextView
             android:id="@+id/textRegId"
@@ -31,9 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/textStudentName"
             app:layout_constraintTop_toBottomOf="@id/textStudentName"
-            android:text="REG ID: 12345" />
+            tools:text="REG ID: 12345" />
 
         <TextView
             android:id="@+id/textGender"
@@ -43,7 +55,7 @@
             android:textSize="14sp"
             app:layout_constraintBaseline_toBaselineOf="@id/textRegId"
             app:layout_constraintStart_toEndOf="@id/textRegId"
-            android:text="GENDER: M" />
+            tools:text="GENDER: M" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

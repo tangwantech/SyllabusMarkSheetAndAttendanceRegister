@@ -42,11 +42,13 @@ class SyllabusLessonsFragment : Fragment(), LessonCheckChangeListener {
     }
 
     private fun setupObservers() {
-        viewModel.selectedChapter.observe(viewLifecycleOwner) { it ->
-            if (it != null) {
-                binding.textChapterTitle.text = getString(R.string.chapter_title_format, it.chapter)
-                adapter.updateData(it.lessons)
-//                viewModel.updateSelectedSubjectLessonsCount(it.lessons.count {lesson -> lesson.isTaught })
+        viewModel.selectedChapter.observe(viewLifecycleOwner) { chapter ->
+            if (chapter != null) {
+                binding.textChapterTitle.text = getString(R.string.chapter_title_format, chapter.chapter)
+                adapter.updateData(chapter.lessons)
+                binding.noDataTextView.visibility = if (chapter.lessons.isEmpty()) View.VISIBLE else View.GONE
+            } else {
+                binding.noDataTextView.visibility = View.VISIBLE
             }
         }
 

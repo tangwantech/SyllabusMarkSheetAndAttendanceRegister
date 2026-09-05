@@ -45,6 +45,9 @@ class StudentAttendanceDetailsFragment : Fragment() {
             if (student != null) {
                 updateUI(student)
                 adapter.updateRecords(student.attendances)
+                binding.noDataTextView.visibility = if (student.attendances.isNullOrEmpty()) View.VISIBLE else View.GONE
+            } else {
+                binding.noDataTextView.visibility = View.VISIBLE
             }
         }
     }

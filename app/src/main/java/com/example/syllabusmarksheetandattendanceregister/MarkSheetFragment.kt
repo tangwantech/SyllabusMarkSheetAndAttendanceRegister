@@ -72,6 +72,9 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
 
                 adapter.updateData(data.students)
             }
+            val isEmpty = data?.students.isNullOrEmpty()
+            binding.noDataTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            binding.btnSaveMarkSheet.isEnabled = !isEmpty && (viewModel.isLoading.value == false)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->

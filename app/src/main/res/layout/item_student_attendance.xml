@@ -21,10 +21,21 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/radioGroup"
+            app:layout_constraintEnd_toStartOf="@+id/textStatus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="John Doe" />
+
+        <TextView
+            android:id="@+id/textStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="PRESENT"
+            tools:textColor="?attr/colorPrimary" />
 
         <TextView
             android:id="@+id/textMatricule"
@@ -78,22 +89,19 @@
             app:selectionRequired="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            >
+            app:layout_constraintTop_toBottomOf="@id/textStatus"
+            android:layout_marginTop="8dp">
 
             <RadioButton
                 android:id="@+id/radioBtnPresent"
-
                 android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:text="P"
                 android:padding="0dp"
-                android:minWidth="0dp"
-                />
+                android:minWidth="0dp" />
 
             <RadioButton
                 android:id="@+id/radioBtnAbsent"
-
                 android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:text="A"

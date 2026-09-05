@@ -37,7 +37,7 @@
             <View
                 android:id="@+id/headerDivider"
                 android:layout_width="wrap_content"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/colorPrimaryLight"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,6 +125,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardHeader"
         tools:listitem="@layout/item_student" />
+
+    <TextView
+        android:id="@+id/noDataTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data_to_display"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerStudents"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recyclerStudents" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSaveMarkSheet"

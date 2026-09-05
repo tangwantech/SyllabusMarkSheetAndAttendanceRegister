@@ -30,8 +30,22 @@ class SyllabusNavFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadInitialData()
+        restoreSelections()
         setupObservers()
         setupListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        restoreSelections()
+    }
+
+    private fun restoreSelections() {
+        binding.spinnerYear.setText(viewModel.selectedYear.value, false)
+        binding.spinnerSubject.setText(viewModel.selectedSubject.value, false)
+        binding.spinnerMainClass.setText(viewModel.selectedMainClass.value, false)
+        
+        binding.layoutMainClass.isEnabled = !viewModel.mainClasses.value.isNullOrEmpty()
     }
 
     private fun setupObservers() {

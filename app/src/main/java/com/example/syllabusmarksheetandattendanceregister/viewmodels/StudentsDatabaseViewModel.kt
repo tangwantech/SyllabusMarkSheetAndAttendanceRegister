@@ -41,6 +41,9 @@ class StudentsDatabaseViewModel : ViewModel() {
     private val _students = MutableLiveData<List<StudentData>>()
     val students: LiveData<List<StudentData>> = _students
 
+    private val _studentsToDelete = MutableLiveData<MutableList<StudentData>>(mutableListOf())
+    val studentsToDelete: LiveData<MutableList<StudentData>> = _studentsToDelete
+
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -104,13 +107,14 @@ class StudentsDatabaseViewModel : ViewModel() {
         val mainClass = _selectedMainClass.value ?: return
         val subclass = _selectedSubclass.value ?: return
 
-        _isLoading.value = true
-        _error.value = null
+        _isLoading.postValue(true)
+        _error.postValue(null)
 
         repository.fetchStudents(sessionToken, year, subject, mainClass, subclass,
             object : StudentDatabaseRepository.FetchStudentsListener {
                 override fun onStudentsAvailable(students: List<StudentData>) {
-                    _students.postValue(students)
+                    val sortedStudents = students.sortedBy { it.name.lowercase() }
+                    _students.postValue(sortedStudents)
                     _navigateToDatabaseEvent.postValue(true)
                     _isLoading.postValue(false)
                 }
@@ -128,28 +132,98 @@ class StudentsDatabaseViewModel : ViewModel() {
         val mainClass = _selectedMainClass.value ?: return
         val subclass = _selectedSubclass.value ?: return
         
-        val newStudent = StudentData(year, name, matricule, gender, subject, mainClass, subclass)
         val currentList = _students.value?.toMutableList() ?: mutableListOf()
+        
+        // Check if student already exists in the list by matricule
+        val exists = currentList.any { it.matricule.equals(matricule, ignoreCase = true) }
+        if (exists) {
+            _error.value = "Student with matricule $matricule already exists"
+            return
+        }
+
+        val newStudent = StudentData(year, name, matricule, gender, subject, mainClass, subclass)
         currentList.add(newStudent)
-        
-        _isLoading.value = true
+        val sortedList = currentList.sortedBy { it.name.lowercase() }
+        _students.postValue(sortedList)
+    }
+
+    fun saveStudents(listener: StudentDatabaseRepository.AddStudentsListener) {
         val sessionToken = UserRepository.getSessionToken() ?: return
-        
-        repository.addStudents(sessionToken, year, subject, mainClass, subclass, currentList, 
+        val year = _selectedYear.value ?: return
+        val subject = _selectedSubject.value ?: return
+        val mainClass = _selectedMainClass.value ?: return
+        val subclass = _selectedSubclass.value ?: return
+        val currentList = _students.value ?: return
+
+        _isLoading.postValue(true)
+        _error.postValue(null)
+
+        repository.addStudents(sessionToken, year, subject, mainClass, subclass, currentList,
             object : StudentDatabaseRepository.AddStudentsListener {
                 override fun onStudentsAdded(result: String) {
-                    _students.postValue(currentList)
                     _isLoading.postValue(false)
+                    listener.onStudentsAdded(result)
                 }
 
                 override fun onError(error: String) {
-                    _error.postValue(error)
                     _isLoading.postValue(false)
+                    _error.postValue(error)
+                    listener.onError(error)
                 }
             })
     }
 
+    fun clearStudentsToDelete(){
+        _studentsToDelete.value?.clear()
+    }
+
     fun onNavigatedToDatabase() {
         _navigateToDatabaseEvent.value = false
+    }
+
+    private val _navigateToDeleteEvent = MutableLiveData<Int?>(null)
+    val navigateToDeleteEvent: LiveData<Int?> = _navigateToDeleteEvent
+
+    fun onLongPressStudent(index: Int) {
+        _navigateToDeleteEvent.value = index
+    }
+
+    fun onNavigatedToDelete() {
+        _navigateToDeleteEvent.value = null
+    }
+
+    fun toggleStudentSelection(index: Int, isSelected: Boolean) {
+        val currentDeleteList = _studentsToDelete.value ?: mutableListOf()
+        val student = _students.value?.get(index) ?: return
+        
+        if (isSelected) {
+            if (!currentDeleteList.any { it.matricule == student.matricule }) {
+                currentDeleteList.add(student)
+            }
+        } else {
+            currentDeleteList.removeAll { it.matricule == student.matricule }
+        }
+        _studentsToDelete.value = currentDeleteList
+    }
+
+    fun deleteSelectedStudents(listener: StudentDatabaseRepository.DeleteStudentsListener) {
+        val sessionToken = UserRepository.getSessionToken() ?: return
+        val toDelete = _studentsToDelete.value ?: return
+        if (toDelete.isEmpty()) return
+
+        _isLoading.postValue(true)
+        repository.deleteStudents(sessionToken, toDelete, object : StudentDatabaseRepository.DeleteStudentsListener {
+            override fun onDeleteSuccessful(result: String) {
+                // Refresh list
+                fetchStudents()
+                _studentsToDelete.postValue(mutableListOf())
+                listener.onDeleteSuccessful(result)
+            }
+
+            override fun onError(error: String) {
+                _isLoading.postValue(false)
+                listener.onError(error)
+            }
+        })
     }
 }

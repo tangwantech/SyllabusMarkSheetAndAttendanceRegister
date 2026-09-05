@@ -104,6 +104,19 @@
         app:layout_constraintTop_toBottomOf="@id/cardProgressHeader"
         tools:listitem="@layout/item_chapter" />
 
+    <TextView
+        android:id="@+id/noDataTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data_to_display"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerChapters"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recyclerChapters" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSaveSyllabus"
         android:layout_width="match_parent"

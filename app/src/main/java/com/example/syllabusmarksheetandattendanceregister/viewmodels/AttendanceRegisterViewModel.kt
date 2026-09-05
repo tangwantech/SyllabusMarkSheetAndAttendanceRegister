@@ -122,14 +122,15 @@ class AttendanceRegisterViewModel : ViewModel() {
         val subclass = _selectedSubclass.value ?: return
         val date = _selectedDate.value ?: return
 
-        _isLoading.value = true
-        _error.value = null
+        _isLoading.postValue(true)
+        _error.postValue(null)
         
         repository.fetchAttendanceRegister(sessionToken, year, mainClass, subclass, subject, date,
             object : AttendanceRegisterRepository.FetchAttendanceRegisterListener {
 
                 override fun onFetchSuccessful(students: List<StudentAttendanceData>) {
-                    _students.postValue(students)
+                    val sortedStudents = students.sortedBy { it.name.lowercase() }
+                    _students.postValue(sortedStudents)
                     _navigateToRegisterEvent.postValue(true)
                     _isLoading.postValue(false)
                 }
@@ -156,7 +157,8 @@ class AttendanceRegisterViewModel : ViewModel() {
             val updatedStudent = student.copy(attendances = newAttendances)
             val updatedList = currentStudents.toMutableList()
             updatedList[position] = updatedStudent
-            _students.value = updatedList
+            val sortedList = updatedList.sortedBy { it.name.lowercase() }
+            _students.value = sortedList
         }
     }
 

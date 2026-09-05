@@ -68,7 +68,7 @@ class MarkSheetRepository {
         val tempStd = toListHashMap(students)
 
 //        println("Students before update to server: $tempStd")
-        Log.d("MarksheetUpdate", tempStd.toString())
+//        Log.d("MarksheetUpdate", tempStd.toString())
         val params = hashMapOf<String, Any>(
             "sessionToken" to sessionToken,
             "academicYear" to academicYear,

@@ -94,4 +94,17 @@
         app:layout_constraintTop_toBottomOf="@id/cardHeader"
         tools:listitem="@layout/item_attendance_record" />
 
+    <TextView
+        android:id="@+id/noDataTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data_to_display"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerAttendanceRecords"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recyclerAttendanceRecords" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

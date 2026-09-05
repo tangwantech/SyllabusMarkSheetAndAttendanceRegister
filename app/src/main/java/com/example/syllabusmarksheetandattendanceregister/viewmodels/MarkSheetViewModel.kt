@@ -119,7 +119,8 @@ class MarkSheetViewModel : ViewModel() {
         markSheetRepository.fetchMarkSheet(sessionToken, year, subject, mainClass, subclass, sequence, 
             object : MarkSheetRepository.FetchMarksheetListener {
                 override fun onMarkSheetAvailable(result: MarkSheetData) {
-                    _markSheetData.postValue(result)
+                    val sortedResult = result.copy(students = result.students.sortedBy { it.name.lowercase() })
+                    _markSheetData.postValue(sortedResult)
                     _navigateToMarkSheetEvent.postValue(true)
                     _isLoading.postValue(false)
                 }
@@ -136,7 +137,8 @@ class MarkSheetViewModel : ViewModel() {
         val students = currentData.students.toMutableList()
         if (studentIndex in students.indices) {
             students[studentIndex] = students[studentIndex].copy(score = score)
-            _markSheetData.value = currentData.copy(students = students)
+            val sortedStudents = students.sortedBy { it.name.lowercase() }
+            _markSheetData.value = currentData.copy(students = sortedStudents)
         }
     }
 
@@ -144,7 +146,8 @@ class MarkSheetViewModel : ViewModel() {
         val currentData = _markSheetData.value ?: return
         val students = currentData.students.toMutableList()
         students[studentIndex].isRegistered = isRegistered
-        _markSheetData.value = currentData.copy(students = students)
+        val sortedStudents = students.sortedBy { it.name.lowercase() }
+        _markSheetData.value = currentData.copy(students = sortedStudents)
     }
 
     fun saveMarkSheet(listener: MarkSheetRepository.UpdateMarkSheetListener) {
