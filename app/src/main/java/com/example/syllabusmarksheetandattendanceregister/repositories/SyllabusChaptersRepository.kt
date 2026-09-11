@@ -1,6 +1,7 @@
 package com.example.syllabusmarksheetandattendanceregister.repositories
 
 
+import android.util.Log
 import com.example.syllabusmarksheetandattendanceregister.credentials.Credentials.Companion.APPLICATION_ID
 import com.example.syllabusmarksheetandattendanceregister.credentials.Credentials.Companion.CLIENT_KEY
 import com.example.syllabusmarksheetandattendanceregister.datamodels.ChapterData
@@ -50,7 +51,8 @@ class SyllabusChaptersRepository {
                     val responseBody = response.body?.string().toString()
                     val result = JSONObject(responseBody)["result"].toString()
                     val chaptersData = Gson().fromJson<ChaptersData>(result, ChaptersData::class.java)
-//                    println(chaptersData)
+//                    println(result)
+//                    Log.d("Syllabus", chaptersData.toString())
                     listener.onSyllabusAvailable(chaptersData.chapters)
                 }else{
                     listener.onError(response.body?.string().toString())

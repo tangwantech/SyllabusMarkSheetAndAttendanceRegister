@@ -87,6 +87,13 @@ class AttendanceNavFragment : Fragment() {
             binding.spinnerSubclass.setText(viewModel.selectedSubclass.value, false)
         }
 
+        viewModel.absenceWeight.observe(viewLifecycleOwner) {absenceWeight ->
+            val absenceWeights = viewModel.absenceWeight
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, absenceWeight)
+            binding.spinnerAbsenceWeight.setAdapter(adapter)
+
+        }
+
         // Validate form when selections change
         viewModel.selectedYear.observe(viewLifecycleOwner) { validateForm() }
         viewModel.selectedSubject.observe(viewLifecycleOwner) { validateForm() }
@@ -130,14 +137,14 @@ class AttendanceNavFragment : Fragment() {
             viewModel.selectSubclass(parent.getItemAtPosition(position) as String)
         }
 
-        val absenceWeights = (1..2).map { it.toString() }
-        binding.spinnerAbsenceWeight.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, absenceWeights))
-        binding.spinnerAbsenceWeight.setOnItemClickListener { parent, _, position, _ ->
-            viewModel.selectAbsenceWeight(parent.getItemAtPosition(position) as String)
-        }
+
 
         binding.editDate.setOnClickListener {
             showDatePicker()
+        }
+
+        binding.spinnerAbsenceWeight.setOnItemClickListener { parent, _, position, _ ->
+            viewModel.selectAbsenceWeight(parent.getItemAtPosition(position) as String)
         }
 
         binding.btnSubmit.setOnClickListener {

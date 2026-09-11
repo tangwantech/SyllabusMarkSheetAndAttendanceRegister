@@ -63,6 +63,9 @@ class AttendanceRegisterViewModel : ViewModel() {
     private val _navigateToDetailsEvent = MutableLiveData<Boolean>(false)
     val navigateToDetailsEvent: LiveData<Boolean> = _navigateToDetailsEvent
 
+    private val _absenceWeights = MutableLiveData<List<String>>((1..2).map { it.toString() })
+    val absenceWeight: LiveData<List<String>> = _absenceWeights
+
     init {
         observeUserData()
     }
