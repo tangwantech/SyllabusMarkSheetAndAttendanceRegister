@@ -82,6 +82,7 @@ class SyllabusChaptersFragment : Fragment(), ChapterClickListener {
 
     private fun setupListeners() {
         binding.btnSaveSyllabus.setOnClickListener {
+            viewModel.updateIsLoading(true)
             viewModel.updateChaptersInSyllabusChaptersRepository(requireContext().applicationContext, object : SyllabusChaptersRepository.UpdateSyllabusListener {
                 override fun onUpdateSyllabusSuccessful() {
                     activity?.runOnUiThread {

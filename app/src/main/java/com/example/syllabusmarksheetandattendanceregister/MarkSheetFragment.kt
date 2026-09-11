@@ -89,13 +89,13 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
 
             val isEmpty = data?.students.isNullOrEmpty()
             binding.noDataTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
-            binding.btnSaveMarkSheet.isEnabled = !isEmpty && (viewModel.isLoading.value == false)
+//            binding.btnSaveMarkSheet.isEnabled = !isEmpty && (viewModel.isLoading.value == false)
+            binding.btnSaveMarkSheet.isEnabled = !isEmpty
 //            binding.btnSaveMarkSheet.isEnabled = changeSaveButtonState(data)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             toggleProgress(isLoading)
-            binding.btnSaveMarkSheet.isEnabled = !isLoading
         }
     }
 
