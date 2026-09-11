@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.syllabusmarksheetandattendanceregister.adapters.StudentsAdapter
 import com.example.syllabusmarksheetandattendanceregister.databinding.DialogUpdateScoreBinding
 import com.example.syllabusmarksheetandattendanceregister.databinding.FragmentMarkSheetBinding
+import com.example.syllabusmarksheetandattendanceregister.datamodels.MarkSheetData
 import com.example.syllabusmarksheetandattendanceregister.datamodels.Student
 import com.example.syllabusmarksheetandattendanceregister.repositories.MarkSheetRepository
 import com.example.syllabusmarksheetandattendanceregister.viewmodels.MarkSheetViewModel
@@ -71,10 +72,15 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
                 binding.textHeaderFemalesCombined.text = getString(R.string.females_stats_combined_format, enrolledFemales, passedFemales, femalePercentage)
 
                 adapter.updateData(data.students)
+
+//                binding.noDataTextView.visibility = View.GONE
+//                binding.btnSaveMarkSheet.isEnabled = true
             }
+
             val isEmpty = data?.students.isNullOrEmpty()
             binding.noDataTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
             binding.btnSaveMarkSheet.isEnabled = !isEmpty && (viewModel.isLoading.value == false)
+//            binding.btnSaveMarkSheet.isEnabled = changeSaveButtonState(data)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
@@ -216,6 +222,10 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
     fun updateIsDataSaved(state:Boolean){
         viewModel.updateIsDataSave(state)
     }
+
+//    fun changeSaveButtonState (data: MarkSheetData?): Boolean{
+//        return data != null
+//    }
 
 
 }

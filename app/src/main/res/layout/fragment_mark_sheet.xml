@@ -145,6 +145,7 @@
         android:layout_height="60dp"
         android:layout_margin="16dp"
         android:text="@string/save_marksheet"
+        android:enabled="false"
         app:cornerRadius="12dp"
         app:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent" />
