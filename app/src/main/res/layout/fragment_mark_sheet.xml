@@ -67,50 +67,181 @@
                 app:layout_constraintTop_toBottomOf="@+id/textHeaderSubclass"
                 tools:text="Sequence 1" />
 
-            <!-- Overall Stats Badge -->
-            <TextView
-                android:id="@+id/textHeaderOverallStats"
+            <!-- Statistics Table -->
+            <TableLayout
+                android:id="@+id/tableStats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_enrolled_badge"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/textHeaderSequence"
-                tools:text="Enrolled: 25  |  Passed: 15  |  60.0%" />
+                android:padding="8dp"
+                android:stretchColumns="*"
+                app:layout_constraintTop_toBottomOf="@+id/textHeaderSequence">
 
-            <!-- Male Stats Badge -->
-            <TextView
-                android:id="@+id/textHeaderMalesCombined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_enrolled_badge"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/textHeaderOverallStats"
-                tools:text="Males(M): 15  |  Passed: 10  |  66.7%" />
+                <!-- Header Row -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/table_header_gender"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:padding="4dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/table_header_enrolled"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/table_header_passed"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/table_header_percent_passed"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center" />
+                </TableRow>
 
-            <!-- Female Stats Badge -->
-            <TextView
-                android:id="@+id/textHeaderFemalesCombined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_enrolled_badge"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/textHeaderMalesCombined"
-                tools:text="Females(F): 10  |  Passed: 5  |  50.0%" />
+                <!-- Divider -->
+                <View
+                    android:layout_height="1dp"
+                    android:background="#66FFFFFF"
+                    android:layout_marginVertical="4dp"/>
+
+                <!-- Male Row -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/table_row_male"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:padding="4dp" />
+                    <TextView
+                        android:id="@+id/textMaleEnrolled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center"
+                        tools:text="15" />
+                    <TextView
+                        android:id="@+id/textMalePassed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center"
+                        tools:text="10" />
+                    <TextView
+                        android:id="@+id/textMalePercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center"
+                        tools:text="66.7%" />
+                </TableRow>
+
+                <!-- Female Row -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/table_row_female"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:padding="4dp" />
+                    <TextView
+                        android:id="@+id/textFemaleEnrolled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center"
+                        tools:text="10" />
+                    <TextView
+                        android:id="@+id/textFemalePassed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center"
+                        tools:text="5" />
+                    <TextView
+                        android:id="@+id/textFemalePercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center"
+                        tools:text="50.0%" />
+                </TableRow>
+
+                <!-- Total Row -->
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/table_row_total"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:padding="4dp" />
+                    <TextView
+                        android:id="@+id/textTotalEnrolled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center"
+                        tools:text="25" />
+                    <TextView
+                        android:id="@+id/textTotalPassed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center"
+                        tools:text="15" />
+                    <TextView
+                        android:id="@+id/textTotalPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:padding="4dp"
+                        android:gravity="center"
+                        tools:text="60.0%" />
+                </TableRow>
+
+            </TableLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

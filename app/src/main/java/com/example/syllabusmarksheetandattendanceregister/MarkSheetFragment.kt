@@ -57,19 +57,29 @@ class MarkSheetFragment : Fragment(), StudentsAdapter.ItemClickLister, StudentsA
                 val enrolledCount = data.students.count { it.isRegistered }
                 val passedCount = data.students.count { it.isRegistered && it.score in 10.0..20.0 }
                 val percentage = if (enrolledCount > 0) (passedCount.toDouble() / enrolledCount) * 100.0 else 0.0
-                binding.textHeaderOverallStats.text = getString(R.string.marksheet_stats_combined_format, enrolledCount, passedCount, percentage)
 
                 // Male Stats
                 val enrolledMales = data.students.count { it.isRegistered && (it.gender.equals("M", ignoreCase = true) || it.gender.equals("Male", ignoreCase = true)) }
                 val passedMales = data.students.count { it.isRegistered && (it.gender.equals("M", ignoreCase = true) || it.gender.equals("Male", ignoreCase = true)) && it.score in 10.0..20.0 }
                 val malePercentage = if (enrolledMales > 0) (passedMales.toDouble() / enrolledMales) * 100.0 else 0.0
-                binding.textHeaderMalesCombined.text = getString(R.string.males_stats_combined_format, enrolledMales, passedMales, malePercentage)
 
                 // Female Stats
                 val enrolledFemales = data.students.count { it.isRegistered && (it.gender.equals("F", ignoreCase = true) || it.gender.equals("Female", ignoreCase = true)) }
                 val passedFemales = data.students.count { it.isRegistered && (it.gender.equals("F", ignoreCase = true) || it.gender.equals("Female", ignoreCase = true)) && it.score in 10.0..20.0 }
                 val femalePercentage = if (enrolledFemales > 0) (passedFemales.toDouble() / enrolledFemales) * 100.0 else 0.0
-                binding.textHeaderFemalesCombined.text = getString(R.string.females_stats_combined_format, enrolledFemales, passedFemales, femalePercentage)
+
+                // Update Table
+                binding.textMaleEnrolled.text = enrolledMales.toString()
+                binding.textMalePassed.text = passedMales.toString()
+                binding.textMalePercentage.text = getString(R.string.percentage_decimal_format, malePercentage)
+
+                binding.textFemaleEnrolled.text = enrolledFemales.toString()
+                binding.textFemalePassed.text = passedFemales.toString()
+                binding.textFemalePercentage.text = getString(R.string.percentage_decimal_format, femalePercentage)
+
+                binding.textTotalEnrolled.text = enrolledCount.toString()
+                binding.textTotalPassed.text = passedCount.toString()
+                binding.textTotalPercentage.text = getString(R.string.percentage_decimal_format, percentage)
 
                 adapter.updateData(data.students)
 

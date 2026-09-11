@@ -73,6 +73,13 @@
     <string name="student_added_successfully">Student added successfully</string>
     <string name="error_fields_required">All fields are required</string>
     <string name="no_data_to_display">No data to display</string>
+    <string name="table_header_gender">Gender</string>
+    <string name="table_header_enrolled">Enrolled</string>
+    <string name="table_header_passed">Passed</string>
+    <string name="table_header_percent_passed">% Passed</string>
+    <string name="table_row_male">Male (M)</string>
+    <string name="table_row_female">Female (F)</string>
+    <string name="table_row_total">Total</string>
 
 <!--    <string name="select_main_class">Select Main Class</string>-->
 <!--    <string name="select_subclass">Select Subclass</string>-->
@@ -107,7 +114,14 @@
     <string name="save">Save</string>
     <string name="student_added_successfully">Student added successfully</string>
     <string name="error_fields_required">All fields are required</string>
-    <string name="no_data_to_display">No data to display</string>-->
+    <string name="no_data_to_display">No data to display</string>
+    <string name="table_header_gender">Gender</string>
+    <string name="table_header_enrolled">Enrolled</string>
+    <string name="table_header_passed">Passed</string>
+    <string name="table_header_percent_passed">% Passed</string>
+    <string name="table_row_male">Male (M)</string>
+    <string name="table_row_female">Female (F)</string>
+    <string name="table_row_total">Total</string>-->
 
 <!--    <string name="teachers_format">Teacher: %1$s</string>-->
 <!--    <string name="no_statistics_to_display">No statistics to display</string>-->
