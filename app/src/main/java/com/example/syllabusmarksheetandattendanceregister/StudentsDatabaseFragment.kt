@@ -69,6 +69,9 @@ class StudentsDatabaseFragment : Fragment() {
         adapter = StudentsDatabaseAdapter(
             onLongClickListener = { index ->
                 viewModel.onLongPressStudent(index)
+            },
+            onItemClickListener = { index ->
+                showEditStudentDialog(index)
             }
         )
         binding.recyclerStudents.layoutManager = LinearLayoutManager(requireContext())
@@ -163,6 +166,63 @@ class StudentsDatabaseFragment : Fragment() {
 
         dialogBinding.btnFinish.setOnClickListener {
             dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun showEditStudentDialog(index: Int) {
+        val student = viewModel.students.value?.getOrNull(index) ?: return
+        val dialogBinding = DialogAddStudentBinding.inflate(layoutInflater)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogBinding.root)
+            .create()
+
+        val titleTextView = (dialogBinding.root as ViewGroup).getChildAt(0) as? android.widget.TextView
+        titleTextView?.text = "Edit Student Info"
+
+        dialogBinding.btnFinish.visibility = View.GONE
+        dialogBinding.btnSubmit.text = getString(R.string.submit)
+
+        val genders = listOf(getString(R.string.gender_m), getString(R.string.gender_f))
+        val genderAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, genders)
+        dialogBinding.spinnerGender.setAdapter(genderAdapter)
+
+        dialogBinding.editStudentName.setText(student.name)
+        dialogBinding.editMatricule.setText(student.matricule)
+        dialogBinding.spinnerGender.setText(student.gender, false)
+
+        fun validateDialog() {
+            val name = dialogBinding.editStudentName.text.toString().trim()
+            val matricule = dialogBinding.editMatricule.text.toString().trim()
+            val gender = dialogBinding.spinnerGender.text.toString().trim()
+            dialogBinding.btnSubmit.isEnabled = name.isNotEmpty() && matricule.isNotEmpty() && gender.isNotEmpty()
+        }
+
+        validateDialog()
+
+        val watcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { validateDialog() }
+            override fun afterTextChanged(s: Editable?) {}
+        }
+
+        dialogBinding.editStudentName.addTextChangedListener(watcher)
+        dialogBinding.editMatricule.addTextChangedListener(watcher)
+        dialogBinding.spinnerGender.setOnItemClickListener { _, _, _, _ -> validateDialog() }
+
+        dialogBinding.btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialogBinding.btnSubmit.setOnClickListener {
+            val name = dialogBinding.editStudentName.text.toString().trim()
+            val matricule = dialogBinding.editMatricule.text.toString().trim()
+            val gender = dialogBinding.spinnerGender.text.toString().trim()
+            
+            viewModel.updateStudent(index, name, matricule, gender)
+            dialog.dismiss()
+            Toast.makeText(requireContext(), "Student updated successfully", Toast.LENGTH_SHORT).show()
         }
 
         dialog.show()

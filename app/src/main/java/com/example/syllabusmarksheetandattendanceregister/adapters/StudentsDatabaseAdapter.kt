@@ -11,7 +11,8 @@ import com.example.syllabusmarksheetandattendanceregister.datamodels.StudentData
 class StudentsDatabaseAdapter(
     private val isDeleteMode: Boolean = false,
     private val onLongClickListener: ((Int) -> Unit)? = null,
-    private val onCheckedChangeListener: ((Int, Boolean) -> Unit)? = null
+    private val onCheckedChangeListener: ((Int, Boolean) -> Unit)? = null,
+    private val onItemClickListener: ((Int) -> Unit)? = null
 ) : RecyclerView.Adapter<StudentsDatabaseAdapter.ViewHolder>() {
 
     private var students: List<StudentData> = emptyList()
@@ -39,8 +40,12 @@ class StudentsDatabaseAdapter(
             holder.binding.checkboxDelete.setOnCheckedChangeListener { _, isChecked ->
                 onCheckedChangeListener?.invoke(position, isChecked)
             }
+            holder.itemView.setOnClickListener(null)
         } else {
             holder.binding.checkboxDelete.visibility = View.GONE
+            holder.itemView.setOnClickListener {
+                onItemClickListener?.invoke(position)
+            }
             holder.itemView.setOnLongClickListener {
                 onLongClickListener?.invoke(position)
                 true

@@ -147,6 +147,24 @@ class StudentsDatabaseViewModel : ViewModel() {
         _students.postValue(sortedList)
     }
 
+    fun updateStudent(index: Int, name: String, matricule: String, gender: String) {
+        val currentList = _students.value?.toMutableList() ?: return
+        if (index !in currentList.indices) return
+
+        // Check if student already exists in the list by matricule (excluding itself)
+        val exists = currentList.filterIndexed { i, _ -> i != index }
+            .any { it.matricule.equals(matricule, ignoreCase = true) }
+        if (exists) {
+            _error.value = "Student with matricule $matricule already exists"
+            return
+        }
+
+        val oldStudent = currentList[index]
+        currentList[index] = oldStudent.copy(name = name, matricule = matricule, gender = gender)
+        val sortedList = currentList.sortedBy { it.name.lowercase() }
+        _students.postValue(sortedList)
+    }
+
     fun saveStudents(listener: StudentDatabaseRepository.AddStudentsListener) {
         val sessionToken = UserRepository.getSessionToken() ?: return
         val year = _selectedYear.value ?: return
