@@ -24,11 +24,16 @@ class StudentsAdapter(
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
         val student = students[position]
         val context = holder.itemView.context
+
+//        holder.binding.textStudentName.isEnabled = student.isRegistered
+//        holder.binding.textRegId.isEnabled = student.isRegistered
+//
         
         holder.binding.textStudentName.text = student.name
         holder.binding.textStudentName.isEnabled = student.isRegistered
 
         holder.binding.textRegId.text = context.getString(R.string.student_reg_id_format, student.matricule)
+
         holder.binding.textGender.text = context.getString(R.string.student_gender_format, student.gender)
 
         holder.binding.textScore.text = context.getString(R.string.student_score_format, student.score.toString())
