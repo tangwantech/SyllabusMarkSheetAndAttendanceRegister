@@ -47,6 +47,10 @@ class DashboardFragment : Fragment() {
             startActivity(MarkSheetActivity.getIntent(requireContext()))
         }
 
+        binding.btnStudentsPerformance.setOnClickListener {
+            startActivity(StudentsPerformanceActivity.getIntent(requireContext()))
+        }
+
         binding.btnAttendance.setOnClickListener {
             startActivity(AttendanceRegisterActivity.getIntent(requireContext()))
         }

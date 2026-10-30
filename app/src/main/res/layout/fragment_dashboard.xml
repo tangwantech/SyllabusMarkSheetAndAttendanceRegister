@@ -106,7 +106,7 @@
                     app:cardCornerRadius="16dp"
                     app:cardElevation="2dp"
                     app:strokeWidth="1dp"
-                    app:strokeColor="#F0F0F0">
+                    app:strokeColor="@color/strokeColor">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -118,7 +118,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/bg_enrolled_badge"
-                            android:backgroundTint="#E8F5F3"
+                            android:backgroundTint="@color/cardBadgeAttendanceBg"
                             android:padding="12dp"
                             android:src="@android:drawable/ic_menu_myplaces"
                             android:contentDescription="@string/attendance_register"
@@ -144,7 +144,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="@string/attendance_desc"
-                            android:textColor="#757575"
+                            android:textColor="@color/cardSubtextColor"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/titleAttendance"
@@ -164,7 +164,7 @@
                     app:cardCornerRadius="16dp"
                     app:cardElevation="2dp"
                     app:strokeWidth="1dp"
-                    app:strokeColor="#F0F0F0">
+                    app:strokeColor="@color/strokeColor">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -176,7 +176,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/bg_enrolled_badge"
-                            android:backgroundTint="#FEF7ED"
+                            android:backgroundTint="@color/cardBadgeSyllabusBg"
                             android:padding="12dp"
                             android:src="@android:drawable/ic_menu_agenda"
                             android:contentDescription="@string/syllabus_coverage"
@@ -202,7 +202,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="@string/syllabus_desc"
-                            android:textColor="#757575"
+                            android:textColor="@color/cardSubtextColor"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/titleSyllabus"
@@ -222,7 +222,7 @@
                     app:cardCornerRadius="16dp"
                     app:cardElevation="2dp"
                     app:strokeWidth="1dp"
-                    app:strokeColor="#F0F0F0">
+                    app:strokeColor="@color/strokeColor">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -234,14 +234,14 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/bg_enrolled_badge"
-                            android:backgroundTint="#FDF2F2"
+                            android:backgroundTint="@color/cardBadgeMarksheetBg"
                             android:padding="12dp"
                             android:src="@android:drawable/ic_menu_edit"
                             android:contentDescription="@string/marksheet"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:tint="#BA1A1A" />
+                            app:tint="@color/error" />
 
                         <TextView
                             android:id="@+id/titleMarkSheet"
@@ -260,11 +260,69 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="@string/marksheet_desc"
-                            android:textColor="#757575"
+                            android:textColor="@color/cardSubtextColor"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/titleMarkSheet"
                             app:layout_constraintTop_toBottomOf="@id/titleMarkSheet" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Students Performance Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnStudentsPerformance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/strokeColor">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/iconStudentsPerformance"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/bg_enrolled_badge"
+                            android:backgroundTint="@color/cardBadgeAttendanceBg"
+                            android:padding="12dp"
+                            android:src="@android:drawable/ic_menu_compass"
+                            android:contentDescription="@string/students_performance"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/titleStudentsPerformance"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/students_performance"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iconStudentsPerformance"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/students_performance_desc"
+                            android:textColor="@color/cardSubtextColor"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/titleStudentsPerformance"
+                            app:layout_constraintTop_toBottomOf="@id/titleStudentsPerformance" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -280,7 +338,7 @@
                     app:cardCornerRadius="16dp"
                     app:cardElevation="2dp"
                     app:strokeWidth="1dp"
-                    app:strokeColor="#F0F0F0">
+                    app:strokeColor="@color/strokeColor">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -292,7 +350,7 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/bg_enrolled_badge"
-                            android:backgroundTint="#E8EAF6"
+                            android:backgroundTint="@color/cardBadgeStudentsBg"
                             android:padding="12dp"
                             android:src="@android:drawable/ic_menu_sort_by_size"
                             android:contentDescription="@string/students_database"
@@ -318,7 +376,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="@string/students_database_desc"
-                            android:textColor="#757575"
+                            android:textColor="@color/cardSubtextColor"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/titleStudentsDatabase"

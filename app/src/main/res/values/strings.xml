@@ -16,6 +16,8 @@
     <string name="marksheet_desc">Manage students test scores</string>
     <string name="attendance_register">Attendance Register</string>
     <string name="attendance_desc">Track student attendance</string>
+    <string name="students_performance">Students Performance</string>
+    <string name="students_performance_desc">View student performance statistics</string>
     <string name="students_database">Students Database</string>
     <string name="students_database_desc">Manage students information</string>
     <string name="sign_out">Sign Out</string>
