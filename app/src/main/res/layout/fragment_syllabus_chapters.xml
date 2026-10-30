@@ -54,6 +54,43 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/textOverallChapterStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/overall_chapter_stats_format"
+                android:textColor="@color/colorOnPrimary"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/overallChapterProgressIndicator"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:progress="0"
+                    app:trackCornerRadius="4dp"
+                    app:trackThickness="8dp"
+                    app:indicatorColor="@color/colorAccent"/>
+
+                <TextView
+                    android:id="@+id/textOverallChapterPercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/percentage_format"
+                    android:textColor="@color/colorOnPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
                 android:id="@+id/textOverallLessonStats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,7 +147,7 @@
         android:layout_height="wrap_content"
         android:text="@string/no_data_to_display"
         android:textSize="18sp"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/recyclerChapters"
         app:layout_constraintEnd_toEndOf="parent"

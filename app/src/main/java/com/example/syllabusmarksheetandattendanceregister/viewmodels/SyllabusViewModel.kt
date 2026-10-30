@@ -60,7 +60,10 @@ class SyllabusViewModel : ViewModel() {
     data class SyllabusProgress(
         val totalLessons: Int,
         val completedLessons: Int,
-        val percentage: Double
+        val percentage: Double,
+        val totalChapters: Int = 0,
+        val completedChapters: Int = 0,
+        val chapterPercentage: Double = 0.0
     )
 
     private val _overallProgress = MutableLiveData<SyllabusProgress>()
@@ -172,14 +175,31 @@ class SyllabusViewModel : ViewModel() {
     }
 
     private fun updateOverallProgress(chaptersList: List<ChapterData>) {
-        var total = 0
-        var completed = 0
+        var totalLessons = 0
+        var completedLessons = 0
+        var completedChapters = 0
+
         chaptersList.forEach { chapter ->
-            total += chapter.lessons.size
-            completed += chapter.lessons.count { it.isTaught }
+            totalLessons += chapter.lessons.size
+            completedLessons += chapter.lessons.count { it.isTaught }
+            if (chapter.lessons.isNotEmpty() && chapter.lessons.all { it.isTaught }) {
+                completedChapters++
+            }
         }
-        val percentage = if (total > 0) (completed.toDouble() * 100.0) / total.toDouble() else 0.0
-        _overallProgress.postValue(SyllabusProgress(total, completed, percentage))
+        val totalChapters = chaptersList.size
+        val lessonPercentage = if (totalLessons > 0) (completedLessons.toDouble() * 100.0) / totalLessons.toDouble() else 0.0
+        val chapterPercentage = if (totalChapters > 0) (completedChapters.toDouble() * 100.0) / totalChapters.toDouble() else 0.0
+
+        _overallProgress.postValue(
+            SyllabusProgress(
+                totalLessons = totalLessons,
+                completedLessons = completedLessons,
+                percentage = lessonPercentage,
+                totalChapters = totalChapters,
+                completedChapters = completedChapters,
+                chapterPercentage = chapterPercentage
+            )
+        )
     }
 
     fun updateChaptersInSyllabusChaptersRepository(context: android.content.Context, listener: SyllabusChaptersRepository.UpdateSyllabusListener){

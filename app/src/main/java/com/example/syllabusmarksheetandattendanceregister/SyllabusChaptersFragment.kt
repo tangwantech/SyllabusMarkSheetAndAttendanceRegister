@@ -69,6 +69,15 @@ class SyllabusChaptersFragment : Fragment(), ChapterClickListener {
         }
 
         viewModel.overallProgress.observe(viewLifecycleOwner) { progress ->
+            binding.textOverallChapterStats.text = getString(
+                R.string.overall_chapter_stats_format,
+                progress.completedChapters,
+                progress.totalChapters
+            )
+            binding.overallChapterProgressIndicator.max = 100
+            binding.overallChapterProgressIndicator.progress = progress.chapterPercentage.toInt()
+            binding.textOverallChapterPercentage.text = getString(R.string.percentage_decimal_format, progress.chapterPercentage)
+
             binding.textOverallLessonStats.text = getString(
                 R.string.overall_lesson_stats_format,
                 progress.completedLessons,

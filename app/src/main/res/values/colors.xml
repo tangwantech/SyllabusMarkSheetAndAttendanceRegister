@@ -16,4 +16,11 @@
     <color name="surfaceColor">#FFFFFF</color>
     <color name="onBackgroundColor">#000000</color>
     <color name="onSurfaceColor">#000000</color>
+
+    <color name="strokeColor">#F0F0F0</color>
+    <color name="cardSubtextColor">#757575</color>
+    <color name="cardBadgeAttendanceBg">#E8F5F3</color>
+    <color name="cardBadgeSyllabusBg">#FEF7ED</color>
+    <color name="cardBadgeMarksheetBg">#FDF2F2</color>
+    <color name="cardBadgeStudentsBg">#E8EAF6</color>
 </resources>

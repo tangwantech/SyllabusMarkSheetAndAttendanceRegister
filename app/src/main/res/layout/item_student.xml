@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="Student Name"
             android:textSize="18sp"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:textStyle="bold"
             android:enabled="false"
             app:layout_constraintEnd_toStartOf="@+id/switchRegistered"

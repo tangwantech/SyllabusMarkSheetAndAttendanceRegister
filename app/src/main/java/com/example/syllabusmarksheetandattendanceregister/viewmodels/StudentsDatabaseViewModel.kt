@@ -1,5 +1,6 @@
 package com.example.syllabusmarksheetandattendanceregister.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -114,6 +115,7 @@ class StudentsDatabaseViewModel : ViewModel() {
             object : StudentDatabaseRepository.FetchStudentsListener {
                 override fun onStudentsAvailable(students: List<StudentData>) {
                     val sortedStudents = students.sortedBy { it.name.lowercase() }
+                    Log.i("StudentDBViewModel", "${ sortedStudents }")
                     _students.postValue(sortedStudents)
                     _navigateToDatabaseEvent.postValue(true)
                     _isLoading.postValue(false)

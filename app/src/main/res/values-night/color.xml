@@ -3,18 +3,25 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#02DAC5</color>
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryDark">#121212</color>
     <color name="colorOnPrimary">#000000</color>
     <color name="colorAccent">#FFB74D</color>
     <color name="error">#CF6679</color>
     <color name="onError">#000000</color>
     <color name="errorContainer">#B00020</color>
     <color name="onErrorContainer">#FFFFFF</color>
-    <color name="colorPrimaryLight">#66FFF9</color>
+    <color name="colorPrimaryLight">#2C5E57</color>
 
     <!-- Dark theme specific backgrounds and surfaces -->
     <color name="backgroundColor">#121212</color>
     <color name="surfaceColor">#1E1E1E</color>
     <color name="onBackgroundColor">#FFFFFF</color>
     <color name="onSurfaceColor">#FFFFFF</color>
+
+    <color name="strokeColor">#2C2C2C</color>
+    <color name="cardSubtextColor">#B0B0B0</color>
+    <color name="cardBadgeAttendanceBg">#1A3835</color>
+    <color name="cardBadgeSyllabusBg">#3E2E19</color>
+    <color name="cardBadgeMarksheetBg">#3A1C1C</color>
+    <color name="cardBadgeStudentsBg">#1F243B</color>
 </resources>

@@ -12,6 +12,8 @@
         <item name="colorOnError">@color/onError</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@color/backgroundColor</item>
+        <item name="colorSurface">@color/surfaceColor</item>
+        <item name="colorOnSurface">@color/onSurfaceColor</item>
     </style>
 
     <style name="Theme.SyllabusMarkSheetAndAttendanceRegister" parent="Base.Theme.SyllabusMarkSheetAndAttendanceRegister" />
