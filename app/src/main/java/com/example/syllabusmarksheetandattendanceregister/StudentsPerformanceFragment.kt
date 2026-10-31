@@ -34,7 +34,7 @@ class StudentsPerformanceFragment : Fragment() {
         viewModel.performanceData.observe(viewLifecycleOwner) { data ->
             if (data != null) {
                 binding.textHeaderSubject.text = getString(R.string.marksheet_header_subject_format, viewModel.selectedSubject.value)
-                binding.textHeaderSubclass.text = getString(R.string.marksheet_header_subclass_format, viewModel.selectedSubclass.value ?: viewModel.selectedMainClass.value)
+                binding.textHeaderSubclass.text = getString(R.string.marksheet_header_subclass_format, viewModel.selectedMainClass.value)
                 binding.textHeaderSequence.text = viewModel.selectedSequence.value
 
                 val maleStats = data.males

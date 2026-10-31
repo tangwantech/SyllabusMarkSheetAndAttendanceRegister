@@ -23,9 +23,6 @@ class StudentsPerformanceViewModel : ViewModel() {
     private val _mainClasses = MutableLiveData<List<String>>()
     val mainClasses: LiveData<List<String>> = _mainClasses
 
-    private val _subclasses = MutableLiveData<List<String>>()
-    val subclasses: LiveData<List<String>> = _subclasses
-
     private val _sequences = MutableLiveData<List<String>>()
     val sequences: LiveData<List<String>> = _sequences
 
@@ -37,9 +34,6 @@ class StudentsPerformanceViewModel : ViewModel() {
 
     private val _selectedMainClass = MutableLiveData<String?>()
     val selectedMainClass: LiveData<String?> = _selectedMainClass
-
-    private val _selectedSubclass = MutableLiveData<String?>()
-    val selectedSubclass: LiveData<String?> = _selectedSubclass
 
     private val _selectedSequence = MutableLiveData<String?>()
     val selectedSequence: LiveData<String?> = _selectedSequence
@@ -53,8 +47,8 @@ class StudentsPerformanceViewModel : ViewModel() {
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
-    private val _navigateToPerformanceEvent = MutableLiveData<Boolean>(false)
-    val navigateToPerformanceEvent: LiveData<Boolean> = _navigateToPerformanceEvent
+    private val _showPerformanceDialogEvent = MutableLiveData<Boolean>(false)
+    val showPerformanceDialogEvent: LiveData<Boolean> = _showPerformanceDialogEvent
 
     init {
         observeUserData()
@@ -77,9 +71,6 @@ class StudentsPerformanceViewModel : ViewModel() {
 
         _selectedSubject.value?.let { subject ->
             UserRepository.getSubjectMainClasses(subject)?.let { _mainClasses.value = it.sorted() }
-            _selectedMainClass.value?.let { mainClass ->
-                UserRepository.getSubclasses(subject, mainClass)?.let { _subclasses.value = it.sorted() }
-            }
         }
     }
 
@@ -88,20 +79,13 @@ class StudentsPerformanceViewModel : ViewModel() {
     fun selectSubject(subject: String) {
         _selectedSubject.value = subject
         _selectedMainClass.value = null
-        _selectedSubclass.value = null
         val classes = UserRepository.getSubjectMainClasses(subject) ?: emptyList()
         _mainClasses.value = classes.sorted()
-        _subclasses.value = emptyList()
     }
 
     fun selectMainClass(mainClass: String) {
         _selectedMainClass.value = mainClass
-        _selectedSubclass.value = null
-        val subject = _selectedSubject.value ?: return
-        val subclasses = UserRepository.getSubclasses(subject, mainClass) ?: emptyList()
-        _subclasses.value = subclasses.sorted()
     }
-
 
     fun selectSequence(sequence: String) { _selectedSequence.value = sequence }
 
@@ -117,7 +101,7 @@ class StudentsPerformanceViewModel : ViewModel() {
             object : StudentsPerformanceStatsRepo.StudentsPerformanceStatsListener {
                 override fun onStudentsPerformanceStatsFetched(result: StudentPerformanceStatsData) {
                     _performanceData.postValue(result)
-                    _navigateToPerformanceEvent.postValue(true)
+                    _showPerformanceDialogEvent.postValue(true)
                     _isLoading.postValue(false)
                 }
 
@@ -128,8 +112,8 @@ class StudentsPerformanceViewModel : ViewModel() {
             })
     }
 
-    fun onNavigatedToPerformance() {
-        _navigateToPerformanceEvent.value = false
+    fun onPerformanceDialogDismissed() {
+        _showPerformanceDialogEvent.value = false
     }
 
     fun isFormValid(): Boolean {
