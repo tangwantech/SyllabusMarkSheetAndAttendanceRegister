@@ -47,6 +47,11 @@
             android:exported="false"
             android:label="@string/students_performance"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".HoursCoverageActivity"
+            android:exported="false"
+            android:label="@string/hours_coverage"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

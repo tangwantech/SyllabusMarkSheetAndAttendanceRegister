@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Syllabus MarkSheet And Attendance Register</string>
     <string name="login_title">Login</string>
@@ -17,6 +16,22 @@
     <string name="marksheet_desc">Manage students test scores</string>
     <string name="attendance_register">Attendance Register</string>
     <string name="attendance_desc">Track student attendance</string>
+    <string name="students_performance">Students Performance</string>
+    <string name="students_performance_desc">View student performance statistics</string>
+    <string name="performance_report">Performance Report</string>
+    <string name="hours_coverage">Hours Coverage Calculator</string>
+    <string name="hours_coverage_desc">Calculate expected and actual hours coverage</string>
+    <string name="select_week_number_hint">Select week number</string>
+    <string name="select_hours_per_week_hint">Select hours per week</string>
+    <string name="expected_hours_done_format">Expected hours done: %1$d</string>
+    <string name="enter_actual_hours_done_hint">Enter actual hours done</string>
+    <string name="hours_coverage_result_format">Hours coverage = %1$.2f%%</string>
+    <string name="error_actual_hours_invalid">Hours must be between 0 and %1$d</string>
+    <string name="table_header_annual_hours">Annual hours programed</string>
+    <string name="table_header_hours_done">Hours done</string>
+    <string name="table_header_percentage_done">Percentage done</string>
+    <string name="students_database">Students Database</string>
+    <string name="students_database_desc">Manage students information</string>
     <string name="sign_out">Sign Out</string>
 
     <string name="select_options">Select Options</string>
@@ -72,4 +87,92 @@
     <string name="save">Save</string>
     <string name="student_added_successfully">Student added successfully</string>
     <string name="error_fields_required">All fields are required</string>
+    <string name="no_data_to_display">No data to display</string>
+    <string name="table_header_gender">Gender</string>
+    <string name="table_header_enrolled">Enrolled</string>
+    <string name="table_header_passed">Passed</string>
+    <string name="table_header_percent_passed">% Passed</string>
+    <string name="table_row_male">Male (M)</string>
+    <string name="table_row_female">Female (F)</string>
+    <string name="table_row_total">Total</string>
+
+    <!--    <string name="header_class_label">Class</string>-->
+    <!--    <string name="header_subject_label">Subject</string>-->
+    <!--    <string name="header_sequence_label">Sequence</string>-->
+    <!--    <string name="header_teacher_label">Teacher</string>-->
+    <!--    <string name="header_enrollment_label">Enrollment</string>-->
+    <!--    <string name="no_data_selected">No Marksheet to display</string>-->
+    <!--    <string name="change_selection">Change</string>-->
+    <!--    <string name="save_scores">Save</string>-->
+    <!--    <string name="teacher_name_format">%1$s</string>-->
+    <!--    <string name="error_invalid_score">Score must be between 0 and 20</string>
+
+        <string name="students_database_title">Students Database</string>
+        <string name="students_in_subject_format">Students in %1$s department</string>
+        <string name="header_students_stats_format">Year: %1$s | Class: %2$s | Total: %3$d</string>
+        <string name="add_new_student">Add New Student</string>
+        <string name="student_name_hint">Student Name</string>
+        <string name="student_matricule_hint">Matricule (REG ID)</string>
+        <string name="select_gender">Select Gender</string>
+        <string name="gender_m">M</string>
+        <string name="gender_f">F</string>
+        <string name="save">Save</string>
+        <string name="student_added_successfully">Student added successfully</string>
+        <string name="error_fields_required">All fields are required</string>
+        <string name="no_data_to_display">No data to display</string>
+        <string name="table_header_gender">Gender</string>
+        <string name="table_header_enrolled">Enrolled</string>
+        <string name="table_header_passed">Passed</string>
+        <string name="table_header_percent_passed">% Passed</string>
+        <string name="table_row_male">Male (M)</string>
+        <string name="table_row_female">Female (F)</string>
+        <string name="table_row_total">Total</string>-->
+
+    <!--    <string name="teachers_format">Teacher: %1$s</string>-->
+    <!--    <string name="no_statistics_to_display">No statistics to display</string>-->
+
+    <!--    <string name="label_reg_id">REG ID:</string>-->
+    <!--    <string name="label_gender">GENDER:</string>-->
+    <!--    <string name="label_registered">REGISTERED</string>-->
+    <!--    <string name="label_sat">Sat</string>-->
+    <!--    <string name="label_passed">Passed</string>-->
+    <!--    <string name="label_males">Males</string>-->
+    <!--    <string name="label_females">Females</string>-->
+    <!--    <string name="label_total">Total</string>-->
+
+    <!--    <string name="marksheet_details">Marksheet Details</string>-->
+    <!--    <string name="performance_report">Performance Report</string>-->
+
+    <!--    <string-array name="subjects">-->
+    <!--        <item>Biology</item>-->
+    <!--        <item>Chemistry</item>-->
+    <!--    </string-array>-->
+
+    <!--    <string-array name="main_classes">-->
+    <!--        <item>Form 1</item>-->
+    <!--        <item>Form 2</item>-->
+    <!--        <item>Form 3</item>-->
+    <!--        <item>Form 4</item>-->
+    <!--        <item>Form 5</item>-->
+    <!--        <item>Lower Sixth</item>-->
+    <!--        <item>Upper Sixth</item>-->
+    <!--    </string-array>-->
+
+    <!--    <string-array name="subclasses">-->
+    <!--        <item>A</item>-->
+    <!--        <item>B</item>-->
+    <!--        <item>C</item>-->
+    <!--        <item>Bil</item>-->
+    <!--        <item>Arts</item>-->
+    <!--        <item>Science</item>-->
+    <!--    </string-array>-->
+
+    <!--    <string-array name="sequences">-->
+    <!--        <item>Sequence 1</item>-->
+    <!--        <item>Sequence 2</item>-->
+    <!--        <item>Sequence 3</item>-->
+    <!--        <item>Sequence 4</item>-->
+    <!--        <item>Sequence 5</item>-->
+    <!--        <item>Sequence 6</item>-->
+    <!--    </string-array>string-array-->
 </resources>

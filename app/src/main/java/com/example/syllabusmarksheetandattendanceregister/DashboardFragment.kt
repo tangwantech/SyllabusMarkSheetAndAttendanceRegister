@@ -43,6 +43,10 @@ class DashboardFragment : Fragment() {
             startActivity(SyllabusCoverageActivity.getIntent(requireContext()))
         }
 
+        binding.btnHoursCoverage.setOnClickListener {
+            startActivity(HoursCoverageActivity.getIntent(requireContext()))
+        }
+
         binding.btnMarkSheet.setOnClickListener {
             startActivity(MarkSheetActivity.getIntent(requireContext()))
         }

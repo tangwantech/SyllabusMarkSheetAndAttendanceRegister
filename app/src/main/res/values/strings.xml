@@ -19,6 +19,18 @@
     <string name="students_performance">Students Performance</string>
     <string name="students_performance_desc">View student performance statistics</string>
     <string name="performance_report">Performance Report</string>
+    <string name="hours_coverage">Hours Coverage Calculator</string>
+    <string name="hours_coverage_desc">Calculate expected and actual hours coverage</string>
+    <string name="select_week_number_hint">Select week number</string>
+    <string name="select_hours_per_week_hint">Select hours per week</string>
+    <string name="select_number_of_subclasses_hint">Select number of subclasses</string>
+    <string name="expected_hours_done_format">Expected hours done: %1$d</string>
+    <string name="enter_actual_hours_done_hint">Enter actual hours done</string>
+    <string name="hours_coverage_result_format">Hours coverage = %1$.2f%%</string>
+    <string name="error_actual_hours_invalid">Hours must be between 0 and %1$d</string>
+    <string name="table_header_annual_hours">Annual hours programed</string>
+    <string name="table_header_hours_done">Hours done</string>
+    <string name="table_header_percentage_done">Percentage done</string>
     <string name="students_database">Students Database</string>
     <string name="students_database_desc">Manage students information</string>
     <string name="sign_out">Sign Out</string>
@@ -84,16 +96,6 @@
     <string name="table_row_male">Male (M)</string>
     <string name="table_row_female">Female (F)</string>
     <string name="table_row_total">Total</string>
-
-<!--    <string name="select_main_class">Select Main Class</string>-->
-<!--    <string name="select_subclass">Select Subclass</string>-->
-<!--    <string name="select_subject">Select Subject</string>-->
-<!--    <string name="select_sequence">Select Sequence</string>-->
-<!--    <string name="ok">OK</string>-->
-<!--    <string name="cancel">Cancel</string>-->
-<!--    <string name="dialog_title">Selection</string>-->
-<!--    <string name="marksheet_selection_title">Marksheet Selection</string>-->
-<!--    <string name="statistics_selection_title">Statistics Selection</string>-->
 
 <!--    <string name="header_class_label">Class</string>-->
 <!--    <string name="header_subject_label">Subject</string>-->
